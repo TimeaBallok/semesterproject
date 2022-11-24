@@ -75,6 +75,16 @@ public class UserFacadeTest {
     @AfterEach
     public void tearDown() {
 //        Remove any data after each test was run
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            //Delete existing users and roles to get a "fresh" database
+            em.createQuery("delete from User").executeUpdate();
+            em.createQuery("delete from Role").executeUpdate();
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 
     // TODO: Delete or change this method
