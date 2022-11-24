@@ -1,30 +1,63 @@
 @startuml
-'https://plantuml.com/class-diagram
+TITLE: Domain
 entity User{
-Username
-Password
+username
+password
 }
 entity Roles{
 rolename
 }
 entity Recipe{
-
+title
 }
 entity Shoppinglist{
 
 }
 entity Ingredients{
-
+name
 }
 entity Mealplan{
+date
+breakfast
+lunch
+dinner
 }
-entity Filters?{
-}
+
 entity BMI{
+height
+weight
 }
 entity Bookmark{
+
+}
+entity Nutrition{
+min
+max
+}
+entity Instructions{
+howTo
+}
+entity Equipment{
+name
+}
+entity Rating{
+:sparkles::sparkles::sparkles::sparkles::sparkles:
 }
 
 
-Class01 "*" }-- "1" Class02
+Roles "*" -- "*" User
+User "1" -- "*" Bookmark
+User "*" -- "*" Shoppinglist
+User "1" -- "*" Mealplan
+User "1" -- "*" BMI
+Recipe "*" -- "*" Ingredients
+Bookmark "*" -- "*" Recipe
+Shoppinglist "*" -- "*" Recipe
+Mealplan "*" -- "*" Recipe
+Ingredients "*" -- "*" Nutrition
+Ingredients "*" -- "1" Shoppinglist
+Recipe "1" -- "1" Instructions
+Recipe "1" -- "*" Equipment
+Recipe "1" -- "*" Rating
+
 @enduml
