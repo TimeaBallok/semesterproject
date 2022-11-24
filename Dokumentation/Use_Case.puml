@@ -1,0 +1,31 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+left to right direction
+
+actor 3rd_party_API as api
+actor User as u
+
+package system {
+usecase "login" as UC1
+usecase "sign up" as UC2
+usecase "search" as UC3
+usecase "rate recipe" as UC4
+usecase "bookmark" as UC5
+usecase "mealplan" as UC6
+usecase "calc BMI" as UC7
+
+u --> UC1
+u --> UC2
+u --> UC3
+api --> UC3
+UC3 --> (by name)
+UC3 --> (filter by nutrients)
+UC3 --> (filter by diet)
+u --> UC4
+u --> UC5
+u --> UC6
+u --> UC7
+}
+
+
+@enduml

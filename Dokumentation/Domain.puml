@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/class-diagram
+entity User{
+Username
+Password
+}
+entity Roles{
+rolename
+}
+entity Recipe{
+
+}
+entity Shoppinglist{
+
+}
+entity Ingredients{
+
+}
+entity Mealplan{
+}
+entity Filters?{
+}
+entity BMI{
+}
+entity Bookmark{
+}
+
+
+Class01 "*" }-- "1" Class02
+@enduml
