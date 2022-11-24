@@ -84,17 +84,15 @@ public class User implements Serializable {
   }
 
   @Override
-  public boolean equals(Object o)
-  {
+  public boolean equals(Object o) {
     if (this == o) return true;
     if (!(o instanceof User)) return false;
     User user = (User) o;
-    return getUserName().equals(user.getUserName()) && getUserPass().equals(user.getUserPass()) && Objects.equals(getRoleList(), user.getRoleList());
+    return getUserName().equals(user.getUserName()) && getUserPass().equals(user.getUserPass());
   }
 
   @Override
-  public int hashCode()
-  {
-    return Objects.hash(getUserName(), getUserPass(), getRoleList());
+  public int hashCode() {
+    return Objects.hash(getUserName(), getUserPass());
   }
 }
