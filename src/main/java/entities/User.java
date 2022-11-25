@@ -1,9 +1,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,6 +28,39 @@ public class User implements Serializable {
     @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
   @ManyToMany
   private List<Role> roleList = new ArrayList<>();
+
+  @OneToMany(mappedBy = "userName")
+  private Set<Bookmark> bookmarks = new LinkedHashSet<>();
+
+  @OneToMany(mappedBy = "userName")
+  private Set<MealPlan> mealPlans = new LinkedHashSet<>();
+
+  @OneToMany(mappedBy = "userName")
+  private Set<Rating> ratings = new LinkedHashSet<>();
+
+  public Set<Rating> getRatings() {
+    return ratings;
+  }
+
+  public void setRatings(Set<Rating> ratings) {
+    this.ratings = ratings;
+  }
+
+  public Set<MealPlan> getMealPlans() {
+    return mealPlans;
+  }
+
+  public void setMealPlans(Set<MealPlan> mealPlans) {
+    this.mealPlans = mealPlans;
+  }
+
+  public Set<Bookmark> getBookmarks() {
+    return bookmarks;
+  }
+
+  public void setBookmarks(Set<Bookmark> bookmarks) {
+    this.bookmarks = bookmarks;
+  }
 
   public List<String> getRolesAsStrings() {
     if (roleList.isEmpty()) {
