@@ -38,7 +38,7 @@ public class RecipeFacade
         List<String> urls = new ArrayList<>();
         urls.add(URL);
         try {
-            List<String> jsonList = parallelRun(urls);g
+            List<String> jsonList = parallelRun(urls);
             return jsonList;
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
