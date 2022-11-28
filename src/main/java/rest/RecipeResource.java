@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import dtos.ChuckDTO;
 import dtos.CombinedDTO;
 import dtos.DadDTO;
+import dtos.RecipeDTO;
 import facades.RecipeFacade;
 import utils.EMF_Creator;
 
@@ -37,6 +38,7 @@ public class RecipeResource
     public String searchRecipeByName(@PathParam("recipeName")String recipeName) throws ExecutionException, InterruptedException
     {
         List<String> recipes = recipeFacade.complexSearch(recipeName);
+        List<RecipeDTO> recipeDTOlist = new ArrayList<>();
         return GSON.toJson(recipes);
     }
 
