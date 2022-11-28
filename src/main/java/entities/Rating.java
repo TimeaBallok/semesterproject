@@ -19,6 +19,11 @@ public class Rating
     private User userName;
 
     @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "recipe_id", nullable = false)
+    private Recipe recipe;
+
+    @NotNull
     @Column(name = "rating", nullable = false)
     private Integer rating;
 
@@ -36,6 +41,14 @@ public class Rating
 
     public void setUserName(User userName) {
         this.userName = userName;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 
     public Integer getRating() {
