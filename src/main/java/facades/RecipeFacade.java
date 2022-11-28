@@ -3,8 +3,12 @@ package facades;
 import utils.CallableHttpUtils;
 
 import javax.persistence.EntityManagerFactory;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -45,6 +49,23 @@ public class RecipeFacade
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String fetchRecipes (String url) throws IOException
+    {
+        URL apiURL = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) apiURL.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Accept", "application/json");
+        connection.setRequestProperty("User-Agent", "server");
+
+        Scanner scan = new Scanner(connection.getInputStream());
+        String jsonStr = null;
+        if (scan.hasNext()) {
+            jsonStr = scan.nextLine();
+        }
+        scan.close();
+        return jsonStr;
     }
 
 //    public List<String> complexSearch(String recipeName, List<String> filterType, List<String> filterMin, List<String> filterMax)

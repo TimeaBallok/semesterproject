@@ -2,10 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.ChuckDTO;
-import dtos.CombinedDTO;
-import dtos.DadDTO;
-import dtos.RecipeDTO;
+import dtos.*;
 import facades.RecipeFacade;
 import utils.EMF_Creator;
 
@@ -15,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -38,9 +36,20 @@ public class RecipeResource
     public String searchRecipeByName(@PathParam("recipeName")String recipeName) throws ExecutionException, InterruptedException
     {
         List<String> recipes = recipeFacade.complexSearch(recipeName);
-        List<RecipeDTO> recipeDTOlist = new ArrayList<>();
-        return GSON.toJson(recipes);
+        RecipesDTO recipesDTO = GSON.fromJson(recipes.get(0), RecipesDTO.class);
+        return GSON.toJson(recipesDTO);
     }
+
+//    @Path("getRecipes")
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public String getCoctail() throws IOException
+//    {
+//        String URL = "https://api.spoonacular.com/recipes/complexSearch?query=&apiKey=88231b9e7c7640969f69239a09918326";
+//        String recipeJSON = recipeFacade.fetchRecipes(URL);
+//        RecipesDTO recipesDTO = GSON.fromJson(recipeJSON, RecipesDTO.class);
+//        return GSON.toJson(recipesDTO);
+//    }
 
 }
 
