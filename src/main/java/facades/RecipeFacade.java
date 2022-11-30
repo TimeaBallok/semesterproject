@@ -54,7 +54,7 @@ public class RecipeFacade
     public String singleRecipePage(int id)
     {
         // https://api.spoonacular.com/recipes/716429/information?includeNutrition=false
-        String URL = "BASE_URL" +  id + "information?includeNutrition=false" + System.getenv("APIKEY");
+        String URL = BASE_URL +  id + "/information?includeNutrition=false" + System.getenv("APIKEY");
         List<String> urls = new ArrayList<>();
         urls.add(URL);
         try {
@@ -67,9 +67,10 @@ public class RecipeFacade
         }
     }
 
+    // TODO: tractor
     public String fetchSingleRecipe (String id) throws IOException
     {
-        URL apiURL = new URL(BASE_URL+id+"/information?includeNutrition=false" + System.getenv("APIKEY"));
+        URL apiURL = new URL(BASE_URL+id+"/information?includeNutrition=true" + System.getenv("APIKEY"));
         HttpURLConnection connection = (HttpURLConnection) apiURL.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");

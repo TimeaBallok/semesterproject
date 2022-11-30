@@ -12,8 +12,22 @@ public class SingleRecipeDTO
     String image;
     String summary;
     String instructions;
+    RecipeNutritionDTO nutrition;
 
-    public SingleRecipeDTO(List<ExtendedIngredientsDTO> extendedIngredients, Integer id, String title, Integer readyInMinutes, Integer servings, String image, String summary, String instructions)
+//    public SingleRecipeDTO(List<ExtendedIngredientsDTO> extendedIngredients, Integer id, String title, Integer readyInMinutes, Integer servings, String image, String summary, String instructions)
+//    {
+//        this.extendedIngredients = extendedIngredients;
+//        this.id = id;
+//        this.title = title;
+//        this.readyInMinutes = readyInMinutes;
+//        this.servings = servings;
+//        this.image = image;
+//        this.summary = summary;
+//        this.instructions = instructions;
+//    }
+
+
+    public SingleRecipeDTO(List<ExtendedIngredientsDTO> extendedIngredients, Integer id, String title, Integer readyInMinutes, Integer servings, String image, String summary, String instructions, RecipeNutritionDTO nutrition)
     {
         this.extendedIngredients = extendedIngredients;
         this.id = id;
@@ -23,7 +37,6 @@ public class SingleRecipeDTO
         this.image = image;
         this.summary = summary;
         this.instructions = instructions;
+        this.nutrition = nutrition;
     }
-
-
 }
