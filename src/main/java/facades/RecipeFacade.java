@@ -38,7 +38,7 @@ public class RecipeFacade
 
     public List<String> complexSearch(String recipeName)
     {
-        String URL = BASE_URL +  recipeName + System.getenv("APIKEY");
+        String URL = BASE_URL + "complexSearch?query=" + recipeName + System.getenv("APIKEY");
         List<String> urls = new ArrayList<>();
         urls.add(URL);
         try {
