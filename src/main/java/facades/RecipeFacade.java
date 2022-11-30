@@ -38,7 +38,7 @@ public class RecipeFacade
 
     public List<String> complexSearch(String recipeName)
     {
-        String URL = BASE_URL + "complexSearch?query="+ recipeName + System.getenv("APIKEY");
+        String URL = BASE_URL +  recipeName + System.getenv("APIKEY");
         List<String> urls = new ArrayList<>();
         urls.add(URL);
         try {
@@ -49,6 +49,39 @@ public class RecipeFacade
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String singleRecipePage(int id)
+    {
+        // https://api.spoonacular.com/recipes/716429/information?includeNutrition=false
+        String URL = "BASE_URL" +  id + "information?includeNutrition=false" + System.getenv("APIKEY");
+        List<String> urls = new ArrayList<>();
+        urls.add(URL);
+        try {
+            List<String> jsonList = parallelRun(urls);
+            return jsonList.get(0);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String fetchSingleRecipe (String id) throws IOException
+    {
+        URL apiURL = new URL(BASE_URL+id+"/information?includeNutrition=false" + System.getenv("APIKEY"));
+        HttpURLConnection connection = (HttpURLConnection) apiURL.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Accept", "application/json");
+        connection.setRequestProperty("User-Agent", "server");
+
+        Scanner scan = new Scanner(connection.getInputStream());
+        String jsonStr = null;
+        if (scan.hasNext()) {
+            jsonStr = scan.nextLine();
+        }
+        scan.close();
+        return jsonStr;
     }
 
     public String fetchRecipes (String url) throws IOException

@@ -4,3 +4,7 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/semesterproject/api/recipe/getRecipes
 Content-Type: application/json
+
+###
+GET http://localhost:8080/semesterproject/api/recipe/singleRecipe/324694
+Content-Type: application/json

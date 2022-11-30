@@ -40,16 +40,17 @@ public class RecipeResource
         return GSON.toJson(recipesDTO);
     }
 
-//    @Path("getRecipes")
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public String getCoctail() throws IOException
-//    {
-//        String URL = "https://api.spoonacular.com/recipes/complexSearch?query=&apiKey=88231b9e7c7640969f69239a09918326";
-//        String recipeJSON = recipeFacade.fetchRecipes(URL);
-//        RecipesDTO recipesDTO = GSON.fromJson(recipeJSON, RecipesDTO.class);
-//        return GSON.toJson(recipesDTO);
-//    }
+    @Path("singleRecipe/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String showSingleRecipe(@PathParam("id")String id) throws ExecutionException, InterruptedException, IOException
+    {
+
+        String recipe = recipeFacade.fetchSingleRecipe(id);
+        SingleRecipeDTO singleRecipeDTO = GSON.fromJson(recipe, SingleRecipeDTO.class);
+        return GSON.toJson(singleRecipeDTO);
+    }
+
 
 }
 
