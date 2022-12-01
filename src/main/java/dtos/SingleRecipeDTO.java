@@ -11,23 +11,11 @@ public class SingleRecipeDTO
     Integer servings;
     String image;
     String summary;
-    String instructions;
-    //RecipeNutritionDTO nutrition;
+    List<String> diets;
+    List<AnalyzedInstructionsDTO> analyzedInstructions;
+    RecipeNutritionDTO nutrition;
 
-    public SingleRecipeDTO(List<ExtendedIngredientsDTO> extendedIngredients, Integer id, String title, Integer readyInMinutes, Integer servings, String image, String summary, String instructions)
-    {
-        this.extendedIngredients = extendedIngredients;
-        this.id = id;
-        this.title = title;
-        this.readyInMinutes = readyInMinutes;
-        this.servings = servings;
-        this.image = image;
-        this.summary = summary;
-        this.instructions = instructions;
-    }
-
-
-//    public SingleRecipeDTO(List<ExtendedIngredientsDTO> extendedIngredients, Integer id, String title, Integer readyInMinutes, Integer servings, String image, String summary, String instructions, RecipeNutritionDTO nutrition)
+//    public SingleRecipeDTO(List<ExtendedIngredientsDTO> extendedIngredients, Integer id, String title, Integer readyInMinutes, Integer servings, String image, String summary, String instructions)
 //    {
 //        this.extendedIngredients = extendedIngredients;
 //        this.id = id;
@@ -37,6 +25,20 @@ public class SingleRecipeDTO
 //        this.image = image;
 //        this.summary = summary;
 //        this.instructions = instructions;
-//        this.nutrition = nutrition;
 //    }
+
+
+    public SingleRecipeDTO(List<ExtendedIngredientsDTO> extendedIngredients, Integer id, String title, Integer readyInMinutes, Integer servings, String image, String summary, List<AnalyzedInstructionsDTO> analyzedInstructions, RecipeNutritionDTO nutrition, List<String> diets)
+    {
+        this.extendedIngredients = extendedIngredients;
+        this.id = id;
+        this.title = title;
+        this.readyInMinutes = readyInMinutes;
+        this.servings = servings;
+        this.image = image;
+        this.summary = summary;
+        this.diets = diets;
+        this.analyzedInstructions = analyzedInstructions;
+        this.nutrition = nutrition;
+    }
 }

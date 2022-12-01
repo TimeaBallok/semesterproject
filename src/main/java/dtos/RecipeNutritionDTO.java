@@ -10,4 +10,12 @@ public class RecipeNutritionDTO
     {
         this.nutrients = nutrients;
     }
+
+    @Override
+    public String toString()
+    {
+        return "RecipeNutritionDTO{" +
+                "nutrients=" + nutrients +
+                '}';
+    }
 }
