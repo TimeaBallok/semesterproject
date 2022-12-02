@@ -1,11 +1,17 @@
 package facades;
 
+import dtos.MealPlanDTO;
+import entities.MealPlan;
+import entities.Recipe;
+import entities.User;
 import utils.CallableHttpUtils;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -133,5 +139,30 @@ public class RecipeFacade
             results.add(temp);
         }
         return results;
+    }
+
+    public MealPlanDTO addMealPlan(MealPlanDTO mealPlanDTO)
+    {
+        EntityManager em = emf.createEntityManager();
+        try
+        {
+            em.getTransaction().begin();
+            User user = em.find(User.class, mealPlanDTO.getUserName());
+            Recipe recipe = em.find(Recipe.class, mealPlanDTO.getRecipeId());
+            if (recipe == null)
+            {
+                recipe = new Recipe(mealPlanDTO.getRecipeId(), mealPlanDTO.getRecipeJson());
+                em.persist(recipe);
+                // need commit here?
+            }
+
+            MealPlan mealPlan = new MealPlan(mealPlanDTO.getRecipeId(), user, recipe, MealPlan.MealType.DINNER, LocalDate.now());
+            em.persist(mealPlan);
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+        }
+        return mealPlanDTO;
     }
 }

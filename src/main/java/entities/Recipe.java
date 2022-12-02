@@ -29,6 +29,25 @@ public class Recipe
     @OneToMany(mappedBy = "recipe")
     private Set<Rating> ratings = new LinkedHashSet<>();
 
+    public Recipe()
+    {
+    }
+
+    public Recipe(Integer id, String recipeJson, String ingredientsJson, Set<Bookmark> bookmarks, Set<Rating> ratings)
+    {
+        this.id = id;
+        this.recipeJson = recipeJson;
+        this.ingredientsJson = ingredientsJson;
+        this.bookmarks = bookmarks;
+        this.ratings = ratings;
+    }
+
+    public Recipe(Integer id, String recipeJson)
+    {
+        this.id = id;
+        this.recipeJson = recipeJson;
+    }
+
     public Integer getId() {
         return id;
     }

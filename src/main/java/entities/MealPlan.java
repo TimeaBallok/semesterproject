@@ -27,11 +27,24 @@ public class MealPlan
     @NotNull
     @Lob
     @Column(name = "meal_type", nullable = false)
-    private String mealType;
+    private MealType type;
 
     @NotNull
     @Column(name = "date", nullable = false)
     private LocalDate date;
+
+    public MealPlan()
+    {
+    }
+
+    public MealPlan(Integer id, User userName, Recipe recipe, MealType type, LocalDate date)
+    {
+        this.id = id;
+        this.userName = userName;
+        this.recipe = recipe;
+        this.type = type;
+        this.date = date;
+    }
 
     public Integer getId() {
         return id;
@@ -57,20 +70,30 @@ public class MealPlan
         this.recipe = recipe;
     }
 
-    public String getMealType() {
-        return mealType;
-    }
 
-    public void setMealType(String mealType) {
-        this.mealType = mealType;
-    }
 
     public LocalDate getDate() {
         return date;
     }
 
+    public MealType getType()
+    {
+        return type;
+    }
+
+    public void setType(MealType type)
+    {
+        this.type = type;
+    }
+
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public enum MealType {
+        BREAKFAST,
+        LUNCH,
+        DINNER
     }
 
 }
