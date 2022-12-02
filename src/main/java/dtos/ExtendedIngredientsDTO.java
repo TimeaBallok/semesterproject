@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public class ExtendedIngredientsDTO
 {
-    Integer id;
-    String nameClean;
-    double amount;
-    String unit;
+    private Integer id;
+    private String nameClean;
+    private double amount;
+    private String unit;
 
     public ExtendedIngredientsDTO(Integer id, String nameClean, double amount, String unit)
     {
