@@ -12,27 +12,21 @@ import java.time.LocalDate;
  */
 public class MealPlanDTO implements Serializable
 {
-    @NotNull
-    private final String userName;
-    private final Integer recipeId;
-    @Size(max = 1073741824)
-    @NotNull
-    private final String recipeJson;
-    @Size(max = 1073741824)
-    private final String ingredientsJson;
-    @NotNull
-    private final MealType type;
-    @NotNull
-    private final LocalDate date;
 
-    public MealPlanDTO(String userName, Integer recipeId, String recipeJson, String ingredientsJson, MealType type, LocalDate date)
+    private  String userName;
+
+    private Integer recipeId;
+
+//    private MealPlan.MealType type;
+//
+//    private LocalDate date;
+
+    public MealPlanDTO(String userName, Integer recipeId, MealPlan.MealType type, LocalDate date)
     {
         this.userName = userName;
         this.recipeId = recipeId;
-        this.recipeJson = recipeJson;
-        this.ingredientsJson = ingredientsJson;
-        this.type = type;
-        this.date = date;
+//        this.type = type;
+//        this.date = date;
     }
 
     public String getUserName()
@@ -40,48 +34,41 @@ public class MealPlanDTO implements Serializable
         return userName;
     }
 
+    public void setUserName(String userName)
+    {
+        this.userName = userName;
+    }
+
     public Integer getRecipeId()
     {
         return recipeId;
     }
 
-    public String getRecipeJson()
+    public void setRecipeId(Integer recipeId)
     {
-        return recipeJson;
+        this.recipeId = recipeId;
     }
 
-    public String getIngredientsJson()
-    {
-        return ingredientsJson;
-    }
+//    public MealPlan.MealType getType()
+//    {
+//        return type;
+//    }
+//
+//    public void setType(MealPlan.MealType type)
+//    {
+//        this.type = type;
+//    }
+//
+//    public LocalDate getDate()
+//    {
+//        return date;
+//    }
+//
+//    public void setDate(LocalDate date)
+//    {
+//        this.date = date;
+//    }
 
-    public MealType getType()
-    {
-        return type;
-    }
-
-    public LocalDate getDate()
-    {
-        return date;
-    }
-
-    @Override
-    public String toString()
-    {
-        return getClass().getSimpleName() + "(" +
-                "userNameUserName = " + userName + ", " +
-                "recipeId = " + recipeId + ", " +
-                "recipeRecipeJson = " + recipeJson + ", " +
-                "recipeIngredientsJson = " + ingredientsJson + ", " +
-                "type = " + type + ", " +
-                "date = " + date + ")";
-    }
-
-    public enum MealType {
-        BREAKFAST,
-        LUNCH,
-        DINNER
-    }
 
 
 

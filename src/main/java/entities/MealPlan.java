@@ -3,6 +3,7 @@ package entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "meal_plan")
@@ -40,6 +41,15 @@ public class MealPlan
     public MealPlan(Integer id, User userName, Recipe recipe, MealType type, LocalDate date)
     {
         this.id = id;
+        this.userName = userName;
+        this.recipe = recipe;
+        this.type = type;
+        this.date = date;
+    }
+
+
+    public MealPlan(User userName, Recipe recipe, MealType type, LocalDate date)
+    {
         this.userName = userName;
         this.recipe = recipe;
         this.type = type;
@@ -88,6 +98,33 @@ public class MealPlan
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "MealPlan{" +
+                "id=" + id +
+                ", userName=" + userName +
+                ", recipe=" + recipe +
+                ", type=" + type +
+                ", date=" + date +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MealPlan mealPlan = (MealPlan) o;
+        return Objects.equals(id, mealPlan.id);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(id);
     }
 
     public enum MealType {

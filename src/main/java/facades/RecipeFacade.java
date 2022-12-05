@@ -152,14 +152,14 @@ public class RecipeFacade
             em.getTransaction().begin();
             User user = em.find(User.class, mealPlanDTO.getUserName());
             Recipe recipe = em.find(Recipe.class, mealPlanDTO.getRecipeId());
-            if (recipe == null)
-            {
-                recipe = new Recipe(mealPlanDTO.getRecipeId(), mealPlanDTO.getRecipeJson());
-                em.persist(recipe);
-                // need commit here?
-            }
+//            if (recipe == null)
+//            {
+//                recipe = new Recipe(singleRecipeDTO.getId(), singleRecipeDTO.toString());
+//                em.persist(recipe);
+//                // need commit here?
+//            }
 
-            MealPlan mealPlan = new MealPlan(mealPlanDTO.getRecipeId(), user, recipe, MealPlan.MealType.DINNER, LocalDate.now());
+            MealPlan mealPlan = new MealPlan(user, recipe, MealPlan.MealType.DINNER, LocalDate.now());
             em.persist(mealPlan);
             em.getTransaction().commit();
 
