@@ -6,6 +6,7 @@ import dtos.*;
 import facades.RecipeFacade;
 import utils.EMF_Creator;
 
+import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -33,6 +34,7 @@ public class RecipeResource
     @Path("search/{recipeName}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("user")
     public String searchRecipeByName(@PathParam("recipeName")String recipeName) throws ExecutionException, InterruptedException
     {
         List<String> recipes = recipeFacade.complexSearch(recipeName);
@@ -44,6 +46,7 @@ public class RecipeResource
     @Path("singleRecipe/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("user")
     public String showSingleRecipe(@PathParam("id")String id) throws ExecutionException, InterruptedException, IOException
     {
 
