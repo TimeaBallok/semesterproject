@@ -16,7 +16,7 @@ public class AnalyzedInstructionsDTO
     @Override
     public String toString()
     {
-        return "AnalyzedInstructionsDTO{" +
+        return "{" +
                 "name='" + name + '\'' +
                 ", steps=" + steps +
                 '}';

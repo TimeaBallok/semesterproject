@@ -14,7 +14,7 @@ public class RecipeNutritionDTO
     @Override
     public String toString()
     {
-        return "RecipeNutritionDTO{" +
+        return "{" +
                 "nutrients=" + nutrients +
                 '}';
     }

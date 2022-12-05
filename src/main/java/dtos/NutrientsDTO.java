@@ -18,11 +18,10 @@ public class NutrientsDTO
     @Override
     public String toString()
     {
-        return "NutrientsDTO{" +
+        return "{" +
                 "name='" + name + '\'' +
                 ", amount=" + amount +
                 ", unit='" + unit + '\'' +
-                ", percentOfDailyNeeds=" + //percentOfDailyNeeds +
                 '}';
     }
 }

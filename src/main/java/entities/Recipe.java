@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -88,4 +89,30 @@ public class Recipe
         this.ratings = ratings;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Recipe{" +
+                "id=" + id +
+                ", recipeJson='" + recipeJson + '\'' +
+                ", ingredientsJson='" + ingredientsJson + '\'' +
+                ", bookmarks=" + bookmarks +
+                ", ratings=" + ratings +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Recipe recipe = (Recipe) o;
+        return Objects.equals(id, recipe.id);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(id);
+    }
 }

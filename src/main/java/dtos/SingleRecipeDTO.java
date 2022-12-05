@@ -41,4 +41,26 @@ public class SingleRecipeDTO
         this.analyzedInstructions = analyzedInstructions;
         this.nutrition = nutrition;
     }
+
+    public Integer getId()
+    {
+        return id;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "{" +
+                "extendedIngredients=" + extendedIngredients +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", readyInMinutes=" + readyInMinutes +
+                ", servings=" + servings +
+                ", image='" + image + '\'' +
+                ", summary='" + summary + '\'' +
+                ", diets=" + diets +
+                ", analyzedInstructions=" + analyzedInstructions +
+                ", nutrition=" + nutrition +
+                '}';
+    }
 }
