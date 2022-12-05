@@ -15,7 +15,7 @@ public class RecipeNutritionDTO
     public String toString()
     {
         return "{" +
-                "nutrients=" + nutrients +
+                "\"nutrients\":" + nutrients +
                 '}';
     }
 }

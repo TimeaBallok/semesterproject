@@ -14,9 +14,9 @@ public class StepsDTO
     @Override
     public String toString()
     {
-        return "StepsDTO{" +
-                "number=" + number +
-                ", step='" + step + '\'' +
+        return "{" +
+                "\"number\":" + number +
+                ", \"step\":\"" + step + "\"" +
                 '}';
     }
 }

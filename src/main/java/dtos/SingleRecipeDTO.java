@@ -10,8 +10,8 @@ public class SingleRecipeDTO
     Integer readyInMinutes;
     Integer servings;
     String image;
-    String summary;
-    List<String> diets;
+//    String summary;
+//    List<String> diets;
     List<AnalyzedInstructionsDTO> analyzedInstructions;
     RecipeNutritionDTO nutrition;
 
@@ -36,8 +36,11 @@ public class SingleRecipeDTO
         this.readyInMinutes = readyInMinutes;
         this.servings = servings;
         this.image = image;
-        this.summary = summary;
-        this.diets = diets;
+//        this.summary = summary;
+//        this.diets = diets;
+//        for (int i = 0; i <= diets.size(); i++) {
+//            diets.set(i, "\""+diets.get(i)+"\"");
+//        }
         this.analyzedInstructions = analyzedInstructions;
         this.nutrition = nutrition;
     }
@@ -51,16 +54,16 @@ public class SingleRecipeDTO
     public String toString()
     {
         return "{" +
-                "extendedIngredients=" + extendedIngredients +
-                ", id=" + id +
-                ", title='" + title + '\'' +
-                ", readyInMinutes=" + readyInMinutes +
-                ", servings=" + servings +
-                ", image='" + image + '\'' +
-                ", summary='" + summary + '\'' +
-                ", diets=" + diets +
-                ", analyzedInstructions=" + analyzedInstructions +
-                ", nutrition=" + nutrition +
+                "\"extendedIngredients\":" + extendedIngredients +
+                ", \"id\":" + id +
+                ", \"title\":\"" + title + "\"" +
+                ", \"readyInMinutes\":" + readyInMinutes +
+                ", \"servings\":" + servings +
+                ", \"image\":\"" + image + "\"" +
+//                ", \"summary\":\"" + summary + "\"" +
+//                ", \"diets\":" + diets +
+                ", \"analyzedInstructions\":" + analyzedInstructions +
+                ", \"nutrition\":" + nutrition +
                 '}';
     }
 }

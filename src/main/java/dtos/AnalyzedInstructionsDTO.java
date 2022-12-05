@@ -17,8 +17,8 @@ public class AnalyzedInstructionsDTO
     public String toString()
     {
         return "{" +
-                "name='" + name + '\'' +
-                ", steps=" + steps +
+                "\"name\":\"" + name + "\"" +
+                ", \"steps\":" + steps +
                 '}';
     }
 }

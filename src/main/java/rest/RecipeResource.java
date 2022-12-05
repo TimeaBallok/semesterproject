@@ -33,7 +33,7 @@ public class RecipeResource
     @Path("search/{recipeName}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("user")
+//    @RolesAllowed("user") TODO:HEY INDKOMMENTER MIG DIN ABE
     public String searchRecipeByName(@PathParam("recipeName")String recipeName) throws ExecutionException, InterruptedException
     {
         List<String> recipes = recipeFacade.complexSearch(recipeName);
@@ -45,7 +45,7 @@ public class RecipeResource
     @Path("singleRecipe/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("user")
+//    @RolesAllowed("user")  TODO:HEY INDKOMMENTER MIG DIN ABE
     public String showSingleRecipe(@PathParam("id")String id) throws ExecutionException, InterruptedException, IOException
     {
 
@@ -58,16 +58,16 @@ public class RecipeResource
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public String saveRecipe(String input){
-        SingleRecipeDTO singleRecipeDTO = GSON.fromJson(input, SingleRecipeDTO.class);
+        String temp2  = input.replace("\n", "").replace("\r", "");
+        SingleRecipeDTO singleRecipeDTO = GSON.fromJson(temp2, SingleRecipeDTO.class);
+        recipeFacade.saveRecipe(singleRecipeDTO);
         Recipe recipe = recipeFacade.getRecipe(singleRecipeDTO.getId());
-        String temp = recipe.getRecipeJson();
-        //recipeFacade.saveRecipe(singleRecipeDTO);
+        String temp = recipe.getRecipeJson().replace("\n", "").replace("\r", "");
         return "{\"msg\":\"Recipe saved\"}";
     }
 
     @Path("{id}")
     @GET
-    @Consumes({MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
     public String getRecipe(@PathParam("id")Integer id) throws ExecutionException, InterruptedException, IOException
     {

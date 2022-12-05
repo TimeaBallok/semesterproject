@@ -19,9 +19,9 @@ public class NutrientsDTO
     public String toString()
     {
         return "{" +
-                "name='" + name + '\'' +
-                ", amount=" + amount +
-                ", unit='" + unit + '\'' +
+                "\"name\":\"" + name + "\"" +
+                ", \"amount\":" + amount +
+                ", \"unit\":\"" + unit + "\"" +
                 '}';
     }
 }

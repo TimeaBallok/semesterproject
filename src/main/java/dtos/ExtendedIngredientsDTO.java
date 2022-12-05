@@ -76,10 +76,10 @@ public class ExtendedIngredientsDTO
     public String toString()
     {
         return "{" +
-                "id=" + id +
-                ", nameClean='" + nameClean + '\'' +
-                ", amount=" + amount +
-                ", unit='" + unit + '\'' +
+                "\"id\":" + id +
+                ", \"nameClean\":\"" + nameClean + "\"" +
+                ", \"amount\":" + amount +
+                ", \"unit\":\"" + unit + "\"" +
                 '}';
     }
 }
