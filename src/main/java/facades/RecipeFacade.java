@@ -1,6 +1,9 @@
 package facades;
 
 import dtos.MealPlanDTO;
+import dtos.RecipeDTO;
+import dtos.RecipeJSONDTO;
+import dtos.SingleRecipeDTO;
 import entities.MealPlan;
 import entities.Recipe;
 import entities.User;
@@ -165,4 +168,35 @@ public class RecipeFacade
         }
         return mealPlanDTO;
     }
+
+    public Recipe saveRecipe(SingleRecipeDTO singleRecipeDTO)
+    {
+        EntityManager em = emf.createEntityManager();
+        Recipe recipe;
+        try
+        {
+            em.getTransaction().begin();
+            recipe = em.find(Recipe.class, singleRecipeDTO.getId());
+            if (recipe == null)
+            {
+                recipe = new Recipe(singleRecipeDTO.getId(), singleRecipeDTO.toString());
+                em.persist(recipe);
+                em.getTransaction().commit();
+            }
+
+        } finally {
+            em.close();
+        }
+        return recipe;
+    }
+
+    public Recipe getRecipe (Integer id)
+    {
+        EntityManager em = emf.createEntityManager();
+        Recipe recipe = em.find(Recipe.class, id);
+//
+        return recipe;
+
+    }
+
 }

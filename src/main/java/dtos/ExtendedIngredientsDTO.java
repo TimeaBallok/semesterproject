@@ -75,7 +75,7 @@ public class ExtendedIngredientsDTO
     @Override
     public String toString()
     {
-        return "ExtendedIngredientsDTO{" +
+        return "{" +
                 "id=" + id +
                 ", nameClean='" + nameClean + '\'' +
                 ", amount=" + amount +
