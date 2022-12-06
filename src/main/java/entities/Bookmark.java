@@ -23,6 +23,12 @@ public class Bookmark
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
 
+    public Bookmark(User userName, Recipe recipe)
+    {
+        this.userName = userName;
+        this.recipe = recipe;
+    }
+
     public Integer getId() {
         return id;
     }

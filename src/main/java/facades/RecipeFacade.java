@@ -1,9 +1,7 @@
 package facades;
 
-import dtos.MealPlanDTO;
-import dtos.RecipeDTO;
-import dtos.RecipeJSONDTO;
-import dtos.SingleRecipeDTO;
+import dtos.*;
+import entities.Bookmark;
 import entities.MealPlan;
 import entities.Recipe;
 import entities.User;
@@ -178,6 +176,33 @@ public class RecipeFacade
         return mealPlanDTO;
     }
 
+    public BookmarkDTO addBookmark(BookmarkDTO bookmarkDTO)
+    {
+        EntityManager em = emf.createEntityManager();
+        try
+        {
+            em.getTransaction().begin();
+            User user = em.find(User.class, bookmarkDTO.getUsername());
+            Recipe recipe = em.find(Recipe.class, bookmarkDTO.getRecipeId());
+//            if (recipe == null)
+//            {
+//                recipe = new Recipe(singleRecipeDTO.getId(), singleRecipeDTO.toString());
+//                em.persist(recipe);
+//                // need commit here?
+//            }
+
+
+
+            Bookmark bookmark = new Bookmark(user, recipe);
+            em.persist(bookmark);
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+        }
+        return bookmarkDTO;
+    }
+
     public Recipe saveRecipe(SingleRecipeDTO singleRecipeDTO)
     {
         EntityManager em = emf.createEntityManager();
@@ -198,6 +223,8 @@ public class RecipeFacade
         }
         return recipe;
     }
+
+
 
     public Recipe getRecipe (Integer id)
     {

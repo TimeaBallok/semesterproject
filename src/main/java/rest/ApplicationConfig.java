@@ -35,6 +35,7 @@ public class ApplicationConfig extends Application {
         resources.add(rest.JokeResource.class);
         resources.add(rest.RecipeResource.class);
         resources.add(rest.MealPlanResource.class);
+        resources.add(rest.BookmarkResource.class);
     }
     
 }

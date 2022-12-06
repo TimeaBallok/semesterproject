@@ -20,7 +20,7 @@ Content-Type: application/json
 
 {
   "userName": "user",
-  "recipeId": 324694,
+  "recipeId": 654812,
   "type": "DINNER",
   "date": {
     "year": 2022,
@@ -28,6 +28,15 @@ Content-Type: application/json
     "day": 6
   }
 
+}
+
+### POST Bookmark
+POST http://localhost:8080/semesterproject/api/bookmark
+Content-Type: application/json
+
+{
+  "userName": "user",
+  "recipeId": 654812
 }
 
 ### POST recipe
