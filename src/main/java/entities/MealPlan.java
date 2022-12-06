@@ -2,6 +2,7 @@ package entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -27,10 +28,12 @@ public class MealPlan
 
     @NotNull
     @Lob
+    @Enumerated(EnumType.STRING)
     @Column(name = "meal_type", nullable = false)
     private MealType type;
 
     @NotNull
+    @Temporal(TemporalType.DATE)
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
@@ -127,10 +130,37 @@ public class MealPlan
         return Objects.hash(id);
     }
 
-    public enum MealType {
+//    public enum MealType {
+//        BREAKFAST,
+//        LUNCH,
+//        DINNER
+//    }
+
+//    public enum MealType {
+//        BREAKFAST("BREAKFAST"),
+//        LUNCH("LUNCH"),
+//        DINNER("DINNER");
+//
+//        private String mealType;
+//
+//        MealType(String mealType) {
+//            this.mealType = mealType;
+//        }
+//
+//        public String getMeal() {
+//            return mealType;
+//        }
+//    }
+
+    public enum MealType implements Serializable
+    {
         BREAKFAST,
         LUNCH,
-        DINNER
+        DINNER;
+
+        public String getMeal() {
+            return this.name();
+        }
     }
 
 }

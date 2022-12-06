@@ -7,6 +7,7 @@ import dtos.SingleRecipeDTO;
 import entities.MealPlan;
 import entities.Recipe;
 import entities.User;
+import rest.MealPlanResource;
 import utils.CallableHttpUtils;
 
 import javax.persistence.EntityManager;
@@ -159,7 +160,15 @@ public class RecipeFacade
 //                // need commit here?
 //            }
 
-            MealPlan mealPlan = new MealPlan(user, recipe, MealPlan.MealType.DINNER, LocalDate.now());
+            MealPlan.MealType type;
+            if (mealPlanDTO.getType().equals("DINNER"))
+                type = MealPlan.MealType.DINNER;
+            else if (mealPlanDTO.getType().equals("BREAKFAST"))
+              type = MealPlan.MealType.BREAKFAST;
+            else
+                type = MealPlan.MealType.LUNCH;
+
+            MealPlan mealPlan = new MealPlan(user, recipe, type, mealPlanDTO.getDate());
             em.persist(mealPlan);
             em.getTransaction().commit();
 

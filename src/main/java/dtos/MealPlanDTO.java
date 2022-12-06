@@ -17,16 +17,16 @@ public class MealPlanDTO implements Serializable
 
     private Integer recipeId;
 
-//    private MealPlan.MealType type;
-//
-//    private LocalDate date;
+    private String type;
 
-    public MealPlanDTO(String userName, Integer recipeId, MealPlan.MealType type, LocalDate date)
+    private LocalDate date;
+
+    public MealPlanDTO(String userName, Integer recipeId, String type, LocalDate date)
     {
         this.userName = userName;
         this.recipeId = recipeId;
-//        this.type = type;
-//        this.date = date;
+        this.type = type;
+        this.date = date;
     }
 
     public String getUserName()
@@ -49,25 +49,27 @@ public class MealPlanDTO implements Serializable
         this.recipeId = recipeId;
     }
 
-//    public MealPlan.MealType getType()
-//    {
-//        return type;
-//    }
-//
-//    public void setType(MealPlan.MealType type)
-//    {
-//        this.type = type;
-//    }
-//
-//    public LocalDate getDate()
-//    {
-//        return date;
-//    }
-//
-//    public void setDate(LocalDate date)
-//    {
-//        this.date = date;
-//    }
+    public String getType()
+    {
+        return type;
+    }
+
+    public void setType(String type)
+    {
+        this.type = type;
+    }
+
+
+
+    public LocalDate getDate()
+    {
+        return date;
+    }
+
+    public void setDate(LocalDate date)
+    {
+        this.date = date;
+    }
 
 
 

@@ -20,7 +20,10 @@ Content-Type: application/json
 
 {
   "userName": "user",
-  "recipeId": 324694
+  "recipeId": 324694,
+  "type": "DINNER",
+  "date": "2022-12-06"
+
 }
 
 ### POST recipe
