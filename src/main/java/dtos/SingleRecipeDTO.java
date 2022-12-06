@@ -11,7 +11,7 @@ public class SingleRecipeDTO
     Integer servings;
     String image;
 //    String summary;
-//    List<String> diets;
+    List<String> diets;
     List<AnalyzedInstructionsDTO> analyzedInstructions;
     RecipeNutritionDTO nutrition;
 
@@ -37,10 +37,10 @@ public class SingleRecipeDTO
         this.servings = servings;
         this.image = image;
 //        this.summary = summary;
-//        this.diets = diets;
-//        for (int i = 0; i <= diets.size(); i++) {
-//            diets.set(i, "\""+diets.get(i)+"\"");
-//        }
+        this.diets = diets;
+        for (int i = 0; i <= diets.size(); i++) {
+            diets.set(i, "\""+diets.get(i)+"\"");
+        }
         this.analyzedInstructions = analyzedInstructions;
         this.nutrition = nutrition;
     }
@@ -61,7 +61,7 @@ public class SingleRecipeDTO
                 ", \"servings\":" + servings +
                 ", \"image\":\"" + image + "\"" +
 //                ", \"summary\":\"" + summary + "\"" +
-//                ", \"diets\":" + diets +
+                ", \"diets\":" + diets +
                 ", \"analyzedInstructions\":" + analyzedInstructions +
                 ", \"nutrition\":" + nutrition +
                 '}';
