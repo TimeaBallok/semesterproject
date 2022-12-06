@@ -58,12 +58,10 @@ public class RecipeResource
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public String saveRecipe(String input){
-        String temp2  = input.replace("\n", "").replace("\r", "");
-        SingleRecipeDTO singleRecipeDTO = GSON.fromJson(temp2, SingleRecipeDTO.class);
-        recipeFacade.saveRecipe(singleRecipeDTO);
-        Recipe recipe = recipeFacade.getRecipe(singleRecipeDTO.getId());
-        String temp = recipe.getRecipeJson().replace("\n", "").replace("\r", "");
-        return "{\"msg\":\"Recipe saved\"}";
+        SingleRecipeDTO singleRecipeDTO = GSON.fromJson(input, SingleRecipeDTO.class);
+        Recipe recipe = recipeFacade.saveRecipe(singleRecipeDTO); //TODO: Change returnvalue to a DTO?
+//        Recipe recipe = recipeFacade.getRecipe(singleRecipeDTO.getId());
+        return "{\"msg\":\"Recipe saved\"}"; //TODO: return recipeJson?
     }
 
     @Path("{id}")

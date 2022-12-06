@@ -30,10 +30,6 @@ public class MealPlanResource
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public String addMealPlan(String input){
-//        String type = GSON.toJson(MealType.DINNER);
-//        MealType mealType = GSON.fromJson("DINNER", MealType.class);
-        LocalDate testDate = LocalDate.now();
-        String myJsonDate = GSON.toJson(testDate);
         MealPlanDTO mealPlanDTO = GSON.fromJson(input, MealPlanDTO.class);
         MealPlanDTO newMealPlanDTO = recipeFacade.addMealPlan(mealPlanDTO);
         return GSON.toJson(newMealPlanDTO);
