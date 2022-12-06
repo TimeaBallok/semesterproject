@@ -29,6 +29,10 @@ public class Bookmark
         this.recipe = recipe;
     }
 
+    public Bookmark()
+    {
+    }
+
     public Integer getId() {
         return id;
     }
