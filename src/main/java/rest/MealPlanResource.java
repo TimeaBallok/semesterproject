@@ -9,6 +9,8 @@ import utils.EMF_Creator;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Path("/mealPlan")
 public class MealPlanResource
@@ -30,6 +32,8 @@ public class MealPlanResource
     public String addMealPlan(String input){
 //        String type = GSON.toJson(MealType.DINNER);
 //        MealType mealType = GSON.fromJson("DINNER", MealType.class);
+        LocalDate testDate = LocalDate.now();
+        String myJsonDate = GSON.toJson(testDate);
         MealPlanDTO mealPlanDTO = GSON.fromJson(input, MealPlanDTO.class);
         MealPlanDTO newMealPlanDTO = recipeFacade.addMealPlan(mealPlanDTO);
         return GSON.toJson(newMealPlanDTO);

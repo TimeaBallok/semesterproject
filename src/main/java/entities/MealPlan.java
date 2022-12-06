@@ -33,7 +33,7 @@ public class MealPlan
     private MealType type;
 
     @NotNull
-    @Temporal(TemporalType.DATE)
+//    @Temporal(TemporalType.DATE)
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
