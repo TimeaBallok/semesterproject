@@ -61,7 +61,7 @@ public class RecipeResource
         SingleRecipeDTO singleRecipeDTO = GSON.fromJson(input, SingleRecipeDTO.class);
         Recipe recipe = recipeFacade.saveRecipe(singleRecipeDTO); //TODO: Change returnvalue to a DTO?
 //        Recipe recipe = recipeFacade.getRecipe(singleRecipeDTO.getId());
-        return "{\"msg\":\"Recipe saved\"}"; //TODO: return recipeJson?
+        return GSON.toJson(recipe.getId()); //TODO: return recipeJson?
     }
 
     @Path("{id}")
