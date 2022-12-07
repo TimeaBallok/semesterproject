@@ -9,6 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "recipes")
+@NamedQuery(name = "Recipe.deleteAllRows", query = "DELETE from Recipe")
 public class Recipe
 {
     @Id

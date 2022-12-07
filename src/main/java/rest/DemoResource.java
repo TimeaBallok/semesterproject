@@ -32,7 +32,7 @@ public class DemoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getInfoForAll() {
-        return "{\"msg\":\"Hello anonymous this is your APIKEY: " + System.getenv("APIKEY") + "\"}";
+        return "{\"msg\":\"Hello anonymous\"}";
     }
 
     //Just to verify if the database is setup

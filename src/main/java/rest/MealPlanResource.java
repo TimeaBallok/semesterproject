@@ -11,6 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Path("/mealPlan")
 public class MealPlanResource
@@ -24,6 +25,16 @@ public class MealPlanResource
     public String demo() {
         return "{\"msg\":\"Hello, mealPlan\"}";
     }
+
+    @Path("/{userName}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getUsersMealPlans(@PathParam("userName") String userName)
+    {
+        List<MealPlanDTO> mealPlans = recipeFacade.getAllMealPlans(userName);
+        return GSON.toJson(mealPlans);
+    }
+
 
 
     @POST

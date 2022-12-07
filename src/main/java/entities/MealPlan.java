@@ -8,6 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "meal_plan")
+@NamedQuery(name = "MealPlan.deleteAllRows", query = "DELETE from MealPlan")
 public class MealPlan
 {
     //Sammensatte nøgler er FYFY!

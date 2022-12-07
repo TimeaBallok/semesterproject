@@ -6,12 +6,12 @@ GET http://localhost:8080/semesterproject/api/recipe/getRecipes
 Content-Type: application/json
 
 ### Find recipe by id
-GET http://localhost:8080/semesterproject/api/recipe/324694
+GET http://localhost:8080/semesterproject/api/recipe/666959
 Content-Type: application/json
 
 
 ### Get SingleRecipe
-GET http://localhost:8080/semesterproject/api/recipe/singleRecipe/324694
+GET http://localhost:8080/semesterproject/api/recipe/singleRecipe/666959
 Content-Type: application/json
 
 ### POST mealPlan
@@ -20,7 +20,7 @@ Content-Type: application/json
 
 {
   "userName": "user",
-  "recipeId": 654812,
+  "recipeId": 666959,
   "type": "DINNER",
   "date": {
     "year": 2022,
@@ -30,13 +30,17 @@ Content-Type: application/json
 
 }
 
+### GET a list of mealplans for user
+GET http://localhost:8080/semesterproject/api/mealPlan/user
+Content-Type: application/json
+
 ### POST Bookmark
 POST http://localhost:8080/semesterproject/api/bookmark
 Content-Type: application/json
 
 {
   "userName": "user",
-  "recipeId": 654812
+  "recipeId": 666959
 }
 
 ### POST recipe
@@ -46,56 +50,36 @@ Content-Type: application/json
 {
   "extendedIngredients": [
     {
-      "id": 10211821,
-      "nameClean": "bell pepper",
-      "amount": 2.0,
+      "id": 1034053,
+      "nameClean": "extra virgin olive oil",
+      "amount": 3.0,
+      "unit": "tablespoons"
+    },
+    {
+      "id": 1102047,
+      "nameClean": "salt and pepper",
+      "amount": 4.0,
       "unit": "servings"
     },
     {
-      "id": 11215,
-      "nameClean": "garlic",
+      "id": 5006,
+      "nameClean": "whole chicken",
       "amount": 1.0,
       "unit": ""
-    },
-    {
-      "id": 11297,
-      "nameClean": "parsley",
-      "amount": 0.25,
-      "unit": "cup"
-    },
-    {
-      "id": 10411529,
-      "nameClean": "plum tomato",
-      "amount": 2.0,
-      "unit": "cups"
-    },
-    {
-      "id": 2047,
-      "nameClean": "table salt",
-      "amount": 0.5,
-      "unit": "tablespoon"
-    },
-    {
-      "id": 15270,
-      "nameClean": "shrimp",
-      "amount": 0.5,
-      "unit": "pound"
-    },
-    {
-      "id": 99074,
-      "nameClean": "squid ink pasta",
-      "amount": 0.5,
-      "unit": "pound"
     }
   ],
-  "id": 654812,
-  "title": "Pasta and Seafood",
+  "id": 666959,
+  "title": "The Minimalist: Simplest Roast Chicken",
   "readyInMinutes": 45,
-  "servings": 2,
-  "image": "https://spoonacular.com/recipeImages/654812-556x370.jpg",
+  "servings": 4,
+  "image": "https://spoonacular.com/recipeImages/666959-556x370.jpg",
   "diets": [
+    "gluten free",
     "dairy free",
-    "pescatarian"
+    "paleolithic",
+    "primal",
+    "fodmap friendly",
+    "whole 30"
   ],
   "analyzedInstructions": [
     {
@@ -103,23 +87,19 @@ Content-Type: application/json
       "steps": [
         {
           "number": 1,
-          "step": "Bring water to a boil for pasta. Cook for 10 minutes or until al dente. In one saucepan heat half of the olive oil."
+          "step": "Put a cast-iron skillet on a low rack in the oven and heat the oven to 500 degrees. Rub the chicken all over with the oil and sprinkle it generously with salt and pepper."
         },
         {
           "number": 2,
-          "step": "Add garlic and saute for a few seconds."
+          "step": "When the oven and skillet are hot, carefully put the chicken in the skillet, breast side up. Roast for 15 minutes, then turn the oven temperature down to 350 degrees. Continue to roast until the bird is golden brown and an instant-read thermometer inserted into the meaty part of the thigh reads 155 to 165 degrees."
         },
         {
           "number": 3,
-          "step": "Add tomatoes and cook for 5 minutes or until thickened; season with salt and pepper.In another skillet cook the shrimp in half the remaining olive oil."
+          "step": "Tip the pan to let the juices flow from the chickens cavity into the pan."
         },
         {
           "number": 4,
-          "step": "Remove from heat and toss in the parsley; season with salt and pepper."
-        },
-        {
-          "number": 5,
-          "step": "Drain pasta and transfer to a serving bowl; add shrimp and tomato mixtures and toss; do not serve with cheese.This recipe yields 2 servings."
+          "step": "Transfer the chicken to a platter and let it rest for at least 5 minutes. Carve and serve.Variations:Source: The New York Times"
         }
       ]
     }
@@ -128,171 +108,183 @@ Content-Type: application/json
     "nutrients": [
       {
         "name": "Calories",
-        "amount": 554.09,
+        "amount": 502.27,
         "unit": "kcal",
-        "percentOfDailyNeeds": 27.7
+        "percentOfDailyNeeds": 25.11
       },
       {
         "name": "Fat",
-        "amount": 3.36,
+        "amount": 39.18,
         "unit": "g",
-        "percentOfDailyNeeds": 5.17
+        "percentOfDailyNeeds": 60.28
       },
       {
         "name": "Saturated Fat",
-        "amount": 0.43,
+        "amount": 9.66,
         "unit": "g",
-        "percentOfDailyNeeds": 2.68
+        "percentOfDailyNeeds": 60.36
       },
       {
         "name": "Carbohydrates",
-        "amount": 95.66,
+        "amount": 0.0,
         "unit": "g",
-        "percentOfDailyNeeds": 31.89
+        "percentOfDailyNeeds": 0.0
       },
       {
         "name": "Net Carbohydrates",
-        "amount": 87.95,
+        "amount": 0.0,
         "unit": "g",
-        "percentOfDailyNeeds": 31.98
+        "percentOfDailyNeeds": 0.0
       },
       {
         "name": "Sugar",
-        "amount": 13.48,
+        "amount": 0.0,
         "unit": "g",
-        "percentOfDailyNeeds": 14.98
+        "percentOfDailyNeeds": 0.0
       },
       {
         "name": "Cholesterol",
-        "amount": 182.57,
+        "amount": 142.83,
         "unit": "mg",
-        "percentOfDailyNeeds": 60.86
+        "percentOfDailyNeeds": 47.61
       },
       {
         "name": "Sodium",
-        "amount": 1936.78,
+        "amount": 327.31,
         "unit": "mg",
-        "percentOfDailyNeeds": 84.21
+        "percentOfDailyNeeds": 14.23
       },
       {
         "name": "Protein",
-        "amount": 40.11,
+        "amount": 35.42,
         "unit": "g",
-        "percentOfDailyNeeds": 80.21
-      },
-      {
-        "name": "Vitamin C",
-        "amount": 138.22,
-        "unit": "mg",
-        "percentOfDailyNeeds": 167.53
-      },
-      {
-        "name": "Vitamin K",
-        "amount": 145.37,
-        "unit": "Âµg",
-        "percentOfDailyNeeds": 138.44
-      },
-      {
-        "name": "Vitamin A",
-        "amount": 4935.31,
-        "unit": "IU",
-        "percentOfDailyNeeds": 98.71
-      },
-      {
-        "name": "Phosphorus",
-        "amount": 325.47,
-        "unit": "mg",
-        "percentOfDailyNeeds": 32.55
-      },
-      {
-        "name": "Iron",
-        "amount": 5.69,
-        "unit": "mg",
-        "percentOfDailyNeeds": 31.63
-      },
-      {
-        "name": "Fiber",
-        "amount": 7.71,
-        "unit": "g",
-        "percentOfDailyNeeds": 30.84
-      },
-      {
-        "name": "Copper",
-        "amount": 0.61,
-        "unit": "mg",
-        "percentOfDailyNeeds": 30.63
-      },
-      {
-        "name": "Potassium",
-        "amount": 1065.2,
-        "unit": "mg",
-        "percentOfDailyNeeds": 30.43
-      },
-      {
-        "name": "Manganese",
-        "amount": 0.43,
-        "unit": "mg",
-        "percentOfDailyNeeds": 21.61
-      },
-      {
-        "name": "Vitamin B6",
-        "amount": 0.43,
-        "unit": "mg",
-        "percentOfDailyNeeds": 21.57
-      },
-      {
-        "name": "Folate",
-        "amount": 81.2,
-        "unit": "Âµg",
-        "percentOfDailyNeeds": 20.3
-      },
-      {
-        "name": "Magnesium",
-        "amount": 78.82,
-        "unit": "mg",
-        "percentOfDailyNeeds": 19.71
-      },
-      {
-        "name": "Vitamin E",
-        "amount": 2.51,
-        "unit": "mg",
-        "percentOfDailyNeeds": 16.75
-      },
-      {
-        "name": "Zinc",
-        "amount": 2.21,
-        "unit": "mg",
-        "percentOfDailyNeeds": 14.73
-      },
-      {
-        "name": "Calcium",
-        "amount": 115.59,
-        "unit": "mg",
-        "percentOfDailyNeeds": 11.56
+        "percentOfDailyNeeds": 70.84
       },
       {
         "name": "Vitamin B3",
-        "amount": 2.24,
+        "amount": 12.95,
         "unit": "mg",
-        "percentOfDailyNeeds": 11.22
+        "percentOfDailyNeeds": 64.76
       },
       {
-        "name": "Vitamin B1",
-        "amount": 0.14,
-        "unit": "mg",
-        "percentOfDailyNeeds": 9.15
+        "name": "Selenium",
+        "amount": 27.42,
+        "unit": "Âµg",
+        "percentOfDailyNeeds": 39.18
       },
       {
-        "name": "Vitamin B2",
-        "amount": 0.12,
+        "name": "Vitamin B6",
+        "amount": 0.67,
         "unit": "mg",
-        "percentOfDailyNeeds": 6.9
+        "percentOfDailyNeeds": 33.33
+      },
+      {
+        "name": "Phosphorus",
+        "amount": 279.95,
+        "unit": "mg",
+        "percentOfDailyNeeds": 27.99
       },
       {
         "name": "Vitamin B5",
-        "amount": 0.49,
+        "amount": 1.73,
         "unit": "mg",
-        "percentOfDailyNeeds": 4.86
+        "percentOfDailyNeeds": 17.33
+      },
+      {
+        "name": "Zinc",
+        "amount": 2.5,
+        "unit": "mg",
+        "percentOfDailyNeeds": 16.64
+      },
+      {
+        "name": "Vitamin E",
+        "amount": 2.08,
+        "unit": "mg",
+        "percentOfDailyNeeds": 13.89
+      },
+      {
+        "name": "Vitamin B2",
+        "amount": 0.23,
+        "unit": "mg",
+        "percentOfDailyNeeds": 13.44
+      },
+      {
+        "name": "Potassium",
+        "amount": 360.08,
+        "unit": "mg",
+        "percentOfDailyNeeds": 10.29
+      },
+      {
+        "name": "Iron",
+        "amount": 1.77,
+        "unit": "mg",
+        "percentOfDailyNeeds": 9.86
+      },
+      {
+        "name": "Vitamin B12",
+        "amount": 0.59,
+        "unit": "Âµg",
+        "percentOfDailyNeeds": 9.84
+      },
+      {
+        "name": "Magnesium",
+        "amount": 38.09,
+        "unit": "mg",
+        "percentOfDailyNeeds": 9.52
+      },
+      {
+        "name": "Vitamin K",
+        "amount": 9.18,
+        "unit": "Âµg",
+        "percentOfDailyNeeds": 8.74
+      },
+      {
+        "name": "Vitamin B1",
+        "amount": 0.11,
+        "unit": "mg",
+        "percentOfDailyNeeds": 7.62
+      },
+      {
+        "name": "Vitamin A",
+        "amount": 266.62,
+        "unit": "IU",
+        "percentOfDailyNeeds": 5.33
+      },
+      {
+        "name": "Copper",
+        "amount": 0.09,
+        "unit": "mg",
+        "percentOfDailyNeeds": 4.58
+      },
+      {
+        "name": "Vitamin C",
+        "amount": 3.05,
+        "unit": "mg",
+        "percentOfDailyNeeds": 3.69
+      },
+      {
+        "name": "Folate",
+        "amount": 11.43,
+        "unit": "Âµg",
+        "percentOfDailyNeeds": 2.86
+      },
+      {
+        "name": "Vitamin D",
+        "amount": 0.38,
+        "unit": "Âµg",
+        "percentOfDailyNeeds": 2.54
+      },
+      {
+        "name": "Calcium",
+        "amount": 21.17,
+        "unit": "mg",
+        "percentOfDailyNeeds": 2.12
+      },
+      {
+        "name": "Manganese",
+        "amount": 0.04,
+        "unit": "mg",
+        "percentOfDailyNeeds": 1.83
       }
     ]
   }

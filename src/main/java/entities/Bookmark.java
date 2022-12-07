@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "bookmarks")
+@NamedQuery(name = "Bookmark.deleteAllRows", query = "DELETE from Bookmark")
 public class Bookmark
 {
     //Sammensatte nøgler er FYFY!

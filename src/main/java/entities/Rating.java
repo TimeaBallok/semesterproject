@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "ratings")
+@NamedQuery(name = "Rating.deleteAllRows", query = "DELETE from Rating")
 public class Rating
 {
     //Sammensatte nøgler er FYFY!

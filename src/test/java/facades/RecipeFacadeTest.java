@@ -1,5 +1,11 @@
 package facades;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import dtos.MealPlanDTO;
+import dtos.SingleRecipeDTO;
+import entities.MealPlan;
+import entities.Recipe;
 import entities.Role;
 import entities.User;
 import org.junit.jupiter.api.*;
@@ -8,9 +14,14 @@ import utils.EMF_Creator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 //Uncomment the line below, to temporarily disable this test
@@ -20,50 +31,76 @@ public class RecipeFacadeTest
 
     private static EntityManagerFactory emf;
     private static RecipeFacade facade;
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    User user;
+    User user1, user2;
+    MealPlanDTO mealPlan;
+    List<MealPlanDTO> mealPlanDTOList = new ArrayList<>();
     Role userRole;
+    LocalDate date;
+    SingleRecipeDTO recipe;
 
-    public RecipeFacadeTest() {
+    public RecipeFacadeTest()
+    {
     }
 
     @BeforeAll
-    public static void setUpClass() {
+    public static void setUpClass()
+    {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
         facade = RecipeFacade.getRecipeFacade(emf);
     }
 
     @AfterAll
-    public static void tearDownClass() {
+    public static void tearDownClass()
+    {
 //        Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
     }
 
     // Setup the DataBase in a known state BEFORE EACH TEST
     //TODO -- Make sure to change the code below to use YOUR OWN entity class
     @BeforeEach
-    public void setUp() {
-//        EntityManager em = emf.createEntityManager();
-//        try {
-//            em.getTransaction().begin();
-//            em.createNamedQuery("Role.deleteAllRows").executeUpdate();
-//            em.createNamedQuery("User.deleteAllRows").executeUpdate();
-//            user = new User("Bo Bobsen", "test1");
-//
-//            if(user.getUserPass().equals("test"))
-//                throw new UnsupportedOperationException("You have not changed the password");
-//
-//            userRole = new Role("user");
-//            user.addRole(userRole);
-//            em.persist(user);
-//            em.getTransaction().commit();
-//
-//        } finally {
-//            em.close();
-//        }
+    public void setUp()
+    {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.createNamedQuery("Role.deleteAllRows").executeUpdate();
+            em.createNamedQuery("User.deleteAllRows").executeUpdate();
+            em.createNamedQuery("MealPlan.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Bookmark.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Rating.deleteAllRows").executeUpdate();
+       //    em.createNamedQuery("Recipe.deleteAllRows").executeUpdate();
+            user1 = new User("Bo Bobsen", "test123");
+            user2 = new User("Ib Ibsen", "test123");
+            date = LocalDate.now();
+            String jsonRecipe = facade.fetchSingleRecipe("666959");
+            recipe = GSON.fromJson(jsonRecipe, SingleRecipeDTO.class);
+
+
+            if (user1.getUserPass().equals("test"))
+                throw new UnsupportedOperationException("You have not changed the password");
+
+
+            userRole = new Role("user");
+            user1.addRole(userRole);
+            user2.addRole(userRole);
+            em.persist(user1);
+            em.persist(user2);
+            facade.saveRecipe(recipe);
+            facade.addMealPlan(mealPlan);
+            em.getTransaction().commit();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            em.close();
+        }
     }
 
     @AfterEach
-    public void tearDown() {
+    public void tearDown()
+    {
 ////        Remove any data after each test was run
 //        EntityManager em = emf.createEntityManager();
 //        try {
@@ -82,7 +119,15 @@ public class RecipeFacadeTest
 
 
     @Test
-    void complexSearch() {
+    void getMealPlansByUN(){
+        List<MealPlanDTO> actual = facade.getAllMealPlans(user1.getUserName());
+        assertEquals(1, actual.size());
+        // assertThat(actual, containsInAnyOrder(new PersonDTO(p1), new PersonDTO(p2)));
+    }
+
+    @Test
+    void complexSearch()
+    {
         List<String> expected = new ArrayList<>();
         //region stupid long text
         expected.add("{" +
@@ -125,5 +170,20 @@ public class RecipeFacadeTest
         //endregion
         List<String> actual = facade.complexSearch("Hungarian");
         assertEquals(expected, actual);
+    }
+
+
+    @Test
+    void addMealPlanToDB()
+    {
+        List<MealPlanDTO> expected = mealPlanDTOList;
+        Recipe newRecipe = new Recipe(664959,
+                //region recipe
+                "'{\"extendedIngredients\":[{\"id\":1034053, \"nameClean\":\"extra virgin olive oil\", \"amount\":3.0, \"unit\":\"tablespoons\"}, {\"id\":1102047, \"nameClean\":\"salt and pepper\", \"amount\":4.0, \"unit\":\"servings\"}, {\"id\":5006, \"nameClean\":\"whole chicken\", \"amount\":1.0, \"unit\":\"\"}], \"id\":666959, \"title\":\"The Minimalist: Simplest Roast Chicken\", \"readyInMinutes\":45, \"servings\":4, \"image\":\"https://spoonacular.com/recipeImages/666959-556x370.jpg\", \"diets\":[gluten free, dairy free, paleolithic, primal, fodmap friendly, whole 30], \"analyzedInstructions\":[{\"name\":\"\", \"steps\":[{\"number\":1, \"step\":\"Put a cast-iron skillet on a low rack in the oven and heat the oven to 500 degrees. Rub the chicken all over with the oil and sprinkle it generously with salt and pepper.\"}, {\"number\":2, \"step\":\"When the oven and skillet are hot, carefully put the chicken in the skillet, breast side up. Roast for 15 minutes, then turn the oven temperature down to 350 degrees. Continue to roast until the bird is golden brown and an instant-read thermometer inserted into the meaty part of the thigh reads 155 to 165 degrees.\"}, {\"number\":3, \"step\":\"Tip the pan to let the juices flow from the chickens cavity into the pan.\"}, {\"number\":4, \"step\":\"Transfer the chicken to a platter and let it rest for at least 5 minutes. Carve and serve.Variations:Source: The New York Times\"}]}], \"nutrition\":{\"nutrients\":[{\"name\":\"Calories\", \"amount\":502.27, \"unit\":\"kcal\"}, {\"name\":\"Fat\", \"amount\":39.18, \"unit\":\"g\"}, {\"name\":\"Saturated Fat\", \"amount\":9.66, \"unit\":\"g\"}, {\"name\":\"Carbohydrates\", \"amount\":0.0, \"unit\":\"g\"}, {\"name\":\"Net Carbohydrates\", \"amount\":0.0, \"unit\":\"g\"}, {\"name\":\"Sugar\", \"amount\":0.0, \"unit\":\"g\"}, {\"name\":\"Cholesterol\", \"amount\":142.83, \"unit\":\"mg\"}, {\"name\":\"Sodium\", \"amount\":327.31, \"unit\":\"mg\"}, {\"name\":\"Protein\", \"amount\":35.42, \"unit\":\"g\"}, {\"name\":\"Vitamin B3\", \"amount\":12.95, \"unit\":\"mg\"}, {\"name\":\"Selenium\", \"amount\":27.42, \"unit\":\"Âµg\"}, {\"name\":\"Vitamin B6\", \"amount\":0.67, \"unit\":\"mg\"}, {\"name\":\"Phosphorus\", \"amount\":279.95, \"unit\":\"mg\"}, {\"name\":\"Vitamin B5\", \"amount\":1.73, \"unit\":\"mg\"}, {\"name\":\"Zinc\", \"amount\":2.5, \"unit\":\"mg\"}, {\"name\":\"Vitamin E\", \"amount\":2.08, \"unit\":\"mg\"}, {\"name\":\"Vitamin B2\", \"amount\":0.23, \"unit\":\"mg\"}, {\"name\":\"Potassium\", \"amount\":360.08, \"unit\":\"mg\"}, {\"name\":\"Iron\", \"amount\":1.77, \"unit\":\"mg\"}, {\"name\":\"Vitamin B12\", \"amount\":0.59, \"unit\":\"Âµg\"}, {\"name\":\"Magnesium\", \"amount\":38.09, \"unit\":\"mg\"}, {\"name\":\"Vitamin K\", \"amount\":9.18, \"unit\":\"Âµg\"}, {\"name\":\"Vitamin B1\", \"amount\":0.11, \"unit\":\"mg\"}, {\"name\":\"Vitamin A\", \"amount\":266.62, \"unit\":\"IU\"}, {\"name\":\"Copper\", \"amount\":0.09, \"unit\":\"mg\"}, {\"name\":\"Vitamin C\", \"amount\":3.05, \"unit\":\"mg\"}, {\"name\":\"Folate\", \"amount\":11.43, \"unit\":\"Âµg\"}, {\"name\":\"Vitamin D\", \"amount\":0.38, \"unit\":\"Âµg\"}, {\"name\":\"Calcium\", \"amount\":21.17, \"unit\":\"mg\"}, {\"name\":\"Manganese\", \"amount\":0.04, \"unit\":\"mg\"}]}}'");
+        //endregion
+        facade.addMealPlan(new MealPlanDTO(user1.getUserName(),newRecipe.getId(),"DINNER",date));
+        Integer actual = expected.size();
+        assertEquals(actual,2);
+
     }
 }

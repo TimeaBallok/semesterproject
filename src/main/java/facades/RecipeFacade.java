@@ -1,15 +1,14 @@
 package facades;
 
 import dtos.*;
-import entities.Bookmark;
-import entities.MealPlan;
-import entities.Recipe;
-import entities.User;
+import entities.*;
 import rest.MealPlanResource;
 import utils.CallableHttpUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
+import javax.ws.rs.WebApplicationException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -174,6 +173,20 @@ public class RecipeFacade
             em.close();
         }
         return mealPlanDTO;
+    }
+
+    public List<MealPlanDTO> getAllMealPlans(String userName)
+    {
+        EntityManager em = emf.createEntityManager();
+
+        try{
+            TypedQuery<MealPlan> query = em.createQuery("SELECT p FROM MealPlan p JOIN p.userName ph WHERE ph.userName = :userName", MealPlan.class);
+            query.setParameter("userName",userName);
+            List<MealPlan> mealPlans = query.getResultList();
+            return MealPlanDTO.getDtos(mealPlans);
+        } finally {
+            em.close();
+        }
     }
 
     public BookmarkDTO addBookmark(BookmarkDTO bookmarkDTO)
