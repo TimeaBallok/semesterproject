@@ -50,6 +50,8 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2 # the action searches for partial matches of the restore keys. When the action finds a partial match, the most recent cache is restored to the path directory.
       - name: Maven verify
+        env:
+          APIKEY: ${{ secrets.APIKEY }}
         run: mvn test
       - name: Maven deploy
         env:
