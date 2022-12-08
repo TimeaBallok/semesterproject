@@ -14,6 +14,10 @@ Content-Type: application/json
 GET http://localhost:8080/semesterproject/api/recipe/singleRecipe/666959
 Content-Type: application/json
 
+### Get Bookmark by Username
+GET http://localhost:8080/semesterproject/api/bookmark/user
+Content-Type: application/json
+
 ### POST mealPlan
 POST http://localhost:8080/semesterproject/api/mealPlan
 Content-Type: application/json

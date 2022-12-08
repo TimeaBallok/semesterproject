@@ -216,6 +216,7 @@ public class RecipeFacade
         return bookmarkDTO;
     }
 
+
     public Recipe saveRecipe(SingleRecipeDTO singleRecipeDTO)
     {
         EntityManager em = emf.createEntityManager();
@@ -248,4 +249,20 @@ public class RecipeFacade
 
     }
 
+    public List<BookmarkDTO> getBookmarks(String userName) {
+        {
+            EntityManager em = emf.createEntityManager();
+
+//            Query("SELECT p FROM MealPlan p JOIN p.userName ph WHERE ph.userName = :userName", MealPlan.class);
+
+            try{
+                TypedQuery<Bookmark> query = em.createQuery("SELECT b FROM Bookmark b Join b.userName bu WHERE bu.userName = :userName", Bookmark.class);
+                query.setParameter("userName",userName);
+                List<Bookmark> bookMarks = query.getResultList();
+                return BookmarkDTO.getBookMarkDtos(bookMarks);
+            } finally {
+                em.close();
+            }
+        }
+    }
 }

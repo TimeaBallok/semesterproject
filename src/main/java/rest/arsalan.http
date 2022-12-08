@@ -1,0 +1,8 @@
+###  login with a user
+POST https://timeaballok.dk/tomcat/semesterproject/api/login
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "test123"
+}
