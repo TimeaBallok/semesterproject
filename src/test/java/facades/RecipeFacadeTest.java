@@ -130,6 +130,7 @@ public class RecipeFacadeTest
 
 
     @Test
+    @Disabled
     void getMealPlansByUN()
     {
         List<MealPlanDTO> actual = facade.getAllMealPlans(user1.getUserName());
