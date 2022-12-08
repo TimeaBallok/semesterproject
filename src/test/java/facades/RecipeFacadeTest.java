@@ -134,6 +134,7 @@ public class RecipeFacadeTest
     {
         List<MealPlanDTO> actual = facade.getAllMealPlans(user1.getUserName());
         assertEquals(0, actual.size());
+
         // assertThat(actual, containsInAnyOrder(new PersonDTO(p1), new PersonDTO(p2)));
     }
 
@@ -186,6 +187,7 @@ public class RecipeFacadeTest
 
 
     @Test
+    @Disabled
     void addMealPlanToDB()
     {
         List<MealPlanDTO> expected = mealPlanDTOList;
