@@ -2,18 +2,15 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.nimbusds.jose.shaded.json.JSONObject;
 import dtos.*;
 import entities.Recipe;
 import facades.RecipeFacade;
 import utils.EMF_Creator;
 
-import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -67,12 +64,11 @@ public class RecipeResource
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getRecipe(@PathParam("id")Integer id) throws ExecutionException, InterruptedException, IOException
+    public String getRecipeFromDBById(@PathParam("id")Integer id) throws ExecutionException, InterruptedException, IOException
     {
-        Recipe recipe = recipeFacade.getRecipe(id);
-        SingleRecipeDTO singleRecipeDTO = GSON.fromJson(recipe.getRecipeJson(), SingleRecipeDTO.class);
-        String temp = GSON.toJson(recipe.getRecipeJson(), String.class);
-        return temp;
+        String recipeJSON = recipeFacade.getRecipeById(id);
+        SingleRecipeDTO singleRecipeDTO = GSON.fromJson(recipeJSON, SingleRecipeDTO.class);
+        return GSON.toJson(recipeJSON);
     }
 
 

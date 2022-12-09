@@ -2,17 +2,14 @@ package facades;
 
 import dtos.*;
 import entities.*;
-import rest.MealPlanResource;
 import utils.CallableHttpUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
-import javax.ws.rs.WebApplicationException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -240,12 +237,12 @@ public class RecipeFacade
 
 
 
-    public Recipe getRecipe (Integer id)
+    public String getRecipeById(Integer id)
     {
         EntityManager em = emf.createEntityManager();
         Recipe recipe = em.find(Recipe.class, id);
-//
-        return recipe;
+        String recipeJSON = recipe.getRecipeJson();
+        return recipeJSON;
 
     }
 

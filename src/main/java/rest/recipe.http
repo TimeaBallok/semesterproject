@@ -5,8 +5,8 @@ Content-Type: application/json
 GET http://localhost:8080/semesterproject/api/recipe/getRecipes
 Content-Type: application/json
 
-### Find recipe by id
-GET http://localhost:8080/semesterproject/api/recipe/666959
+### Get recipe from DB by id
+GET http://localhost:8080/semesterproject/api/recipe/655055
 Content-Type: application/json
 
 
