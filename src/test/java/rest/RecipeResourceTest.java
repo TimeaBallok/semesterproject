@@ -1,6 +1,9 @@
 package rest;
 
+import entities.Role;
+import entities.User;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
@@ -12,6 +15,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
@@ -48,6 +52,38 @@ class RecipeResourceTest
         RestAssured.baseURI = SERVER_URL;
         RestAssured.port = SERVER_PORT;
         RestAssured.defaultParser = Parser.JSON;
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.createNamedQuery("Role.deleteAllRows").executeUpdate();
+            em.createNamedQuery("MealPlan.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Bookmark.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Rating.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Recipe.deleteAllRows").executeUpdate();
+            em.createNamedQuery("User.deleteAllRows").executeUpdate();
+            em.getTransaction().commit();
+            em.getTransaction().begin();
+
+            Role userRole = new Role("user");
+            Role adminRole = new Role("admin");
+            User user = new User("user", "test");
+            user.addRole(userRole);
+            User admin = new User("admin", "test");
+            admin.addRole(adminRole);
+            User both = new User("user_admin", "test");
+            both.addRole(userRole);
+            both.addRole(adminRole);
+            em.persist(userRole);
+            em.persist(adminRole);
+            em.persist(user);
+            em.persist(admin);
+            em.persist(both);
+            //System.out.println("Saved test data to database");
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 
     @AfterAll
@@ -57,6 +93,19 @@ class RecipeResourceTest
         //Don't forget this, if you called its counterpart in @BeforeAll
         EMF_Creator.endREST_TestWithDB();
         httpServer.shutdownNow();
+    }
+
+    private static String securityToken;
+    private static void login(String role, String password) {
+        String json = String.format("{username: \"%s\", password: \"%s\"}", role, password);
+        securityToken = given()
+                .contentType("application/json")
+                .body(json)
+                //.when().post("/api/login")
+                .when().post("/login")
+                .then()
+                .extract().path("token");
+        //System.out.println("TOKEN ---> " + securityToken);
     }
 
     @Test
@@ -75,27 +124,35 @@ class RecipeResourceTest
                 .body("msg", equalTo("Hello, food junkie"));
     }
 
-//    @Test
-//    @Disabled
-//    void getRecipes()
-//    {
-//        given()
-//                .contentType("application/json")
-//                .get("/recipe/search/{recipe}",recipeName).then()
-//                .assertThat()
-//                .statusCode(HttpStatus.OK_200.getStatusCode());
-//    }
+    @Test
+    @Disabled
+    void getRecipes()
+    {
+        login("user", "test");
+        given()
+                .contentType("application/json")
+                .accept(ContentType.JSON)
+                .header("x-access-token", securityToken)
+                .when()
+                .get("/recipe/search/{recipe}",recipeName).then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode());
+    }
 
     @Test
     @Disabled
     void getBookmarksByUsername()
     {
+        login("user", "test");
         given()
                 .contentType("application/json")
-                .get("/bookmark/user").then()
+                .accept(ContentType.JSON)
+                .header("x-access-token", securityToken)
+                .when()
+                .get("/bookmark/user/").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("userName",notNullValue());
+                .body("userName", equalTo("user"));
     }
 
     @Test
@@ -104,6 +161,7 @@ class RecipeResourceTest
     {
         given()
                 .contentType("application/json")
+                .accept(ContentType.JSON)
                 .get("/mealPlan/user").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
