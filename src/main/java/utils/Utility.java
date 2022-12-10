@@ -57,16 +57,21 @@ public class Utility {
         char start = badJSON.charAt(indexOfStartBracket);
         int indexOfEndBracket = badJSON.indexOf("], \"analyzedInstructions");
         char end = badJSON.charAt(indexOfEndBracket);
-        String diets = badJSON.substring(indexOfStartBracket, indexOfEndBracket);
-        String arrayOfDiets[] = diets.split(", ");
-        String workingDiets = "";
-        for (int i = 0; i < arrayOfDiets.length; i++) {
-            if (i == arrayOfDiets.length-1)
-                workingDiets += "\""+arrayOfDiets[i]+"\"";
-            else
-                workingDiets += "\""+arrayOfDiets[i]+"\", ";
+        if (indexOfStartBracket+1 != indexOfEndBracket)
+        {
+            String diets = badJSON.substring(indexOfStartBracket, indexOfEndBracket);
+            String arrayOfDiets[] = diets.split(", ");
+            String workingDiets = "";
+            for (int i = 0; i < arrayOfDiets.length; i++) {
+                if (i == arrayOfDiets.length-1)
+                    workingDiets += "\""+arrayOfDiets[i]+"\"";
+                else
+                    workingDiets += "\""+arrayOfDiets[i]+"\", ";
+            }
+            return badJSON.replace(diets, workingDiets);
         }
-        return badJSON.replace(diets, workingDiets);
+        else
+            return badJSON;
     }
 
 }

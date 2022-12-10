@@ -14,6 +14,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -73,6 +74,27 @@ public class RecipeResource
         recipeJSON = Utility.fixDiets(recipeJSON);
         SingleRecipeDTO singleRecipeDTO = GSON.fromJson(recipeJSON, SingleRecipeDTO.class);
         return GSON.toJson(singleRecipeDTO);
+    }
+
+    @Path("user/{userName}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getBookmarkedRecipeFromDBByUser(@PathParam("userName")String userName) throws ExecutionException, InterruptedException, IOException
+    {
+        List<String> recipeJSONList = recipeFacade.getBookmarkedRecipeJSONFromDbByUser(userName);
+        List<String> fixedRecipeJSONList = new ArrayList<>();
+        String recipeJSON = "";
+        for (int i = 0; i < recipeJSONList.size(); i++) {
+            recipeJSON = Utility.fixDiets(recipeJSONList.get(i));
+            fixedRecipeJSONList.add(recipeJSON);
+        }
+        List<SingleRecipeDTO> singleRecipeDTOList = new ArrayList<>();
+        SingleRecipeDTO singleRecipeDTO;
+        for (int i = 0; i < recipeJSONList.size(); i++) {
+            singleRecipeDTO = GSON.fromJson(fixedRecipeJSONList.get(i), SingleRecipeDTO.class);
+            singleRecipeDTOList.add(singleRecipeDTO);
+        }
+        return GSON.toJson(singleRecipeDTOList);
     }
 
 

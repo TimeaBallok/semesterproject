@@ -3,6 +3,7 @@ package facades;
 import dtos.*;
 import entities.*;
 import utils.CallableHttpUtils;
+import utils.Utility;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -243,7 +244,23 @@ public class RecipeFacade
         Recipe recipe = em.find(Recipe.class, id);
         String recipeJSON = recipe.getRecipeJson();
         return recipeJSON;
+    }
 
+    public List<String> getBookmarkedRecipeJSONFromDbByUser(String userName)
+    {
+        {
+            EntityManager em = emf.createEntityManager();
+            try{
+                TypedQuery<Recipe> query = em.createQuery("SELECT r FROM Recipe r Join r.bookmarks bm Join bm.userName us WHERE us.userName = :userName", Recipe.class);
+                query.setParameter("userName",userName);
+                List<Recipe> recipes = query.getResultList();
+                List<String> recipeJSONList = new ArrayList<>();
+                recipes.forEach(recipe -> recipeJSONList.add(recipe.getRecipeJson()));
+                return recipeJSONList;
+            } finally {
+                em.close();
+            }
+        }
     }
 
     public List<BookmarkDTO> getBookmarks(String userName) {

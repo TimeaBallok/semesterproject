@@ -6,7 +6,11 @@ GET http://localhost:8080/semesterproject/api/recipe/getRecipes
 Content-Type: application/json
 
 ### Get recipe from DB by id
-GET http://localhost:8080/semesterproject/api/recipe/655055
+GET http://localhost:8080/semesterproject/api/recipe/654812
+Content-Type: application/json
+
+### Get getbookmarked recipe list from DB by userName
+GET http://localhost:8080/semesterproject/api/recipe/user/user
 Content-Type: application/json
 
 
