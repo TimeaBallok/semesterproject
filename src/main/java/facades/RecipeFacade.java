@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -184,6 +185,25 @@ public class RecipeFacade
             return MealPlanDTO.getDtos(mealPlans);
         } finally {
             em.close();
+        }
+    }
+
+    public List<String> getMealplanRecipesJSONByUserAndDate(String userName, LocalDate date)
+    {
+        {
+            EntityManager em = emf.createEntityManager();
+            try{
+                //SELECT r FROM Recipe r Join r.bookmarks bm Join bm.userName us WHERE us.userName = :userName
+                TypedQuery<Recipe> query = em.createQuery("SELECT r FROM MealPlan m Join m.recipe r WHERE m.userName.userName = :userName AND m.date = :date", Recipe.class);
+                query.setParameter("userName",userName);
+                query.setParameter("date",date);
+                List<Recipe> recipes = query.getResultList();
+                List<String> recipeJSONList = new ArrayList<>();
+                recipes.forEach(recipe -> recipeJSONList.add(Utility.fixDiets(recipe.getRecipeJson())));
+                return recipeJSONList;
+            } finally {
+                em.close();
+            }
         }
     }
 

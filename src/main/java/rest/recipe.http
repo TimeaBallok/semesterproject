@@ -42,6 +42,16 @@ Content-Type: application/json
 GET http://localhost:8080/semesterproject/api/mealPlan/user
 Content-Type: application/json
 
+### Get Mealplan recipe list by userName & Date
+POST http://localhost:8080/semesterproject/api/mealPlan/user/recipes
+Content-Type: application/json
+
+{
+  "year": 2022,
+  "month": 11,
+  "day": 4
+}
+
 ### POST Bookmark
 POST http://localhost:8080/semesterproject/api/bookmark
 Content-Type: application/json
