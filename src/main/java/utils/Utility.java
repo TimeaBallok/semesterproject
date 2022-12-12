@@ -53,7 +53,7 @@ public class Utility {
 
     public static String fixDiets(String badJSON)
     {
-        int indexOfStartBracket = badJSON.indexOf("diets\":[")+8;
+        int indexOfStartBracket = badJSON.indexOf("diets\":[")+7;
         char start = badJSON.charAt(indexOfStartBracket);
         int indexOfEndBracket = badJSON.indexOf("], \"analyzedInstructions");
         char end = badJSON.charAt(indexOfEndBracket);
