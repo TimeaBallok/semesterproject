@@ -3,9 +3,11 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.MealPlanDTO;
+import dtos.SingleMealPlanDTO;
 import dtos.SingleRecipeDTO;
 import facades.RecipeFacade;
 import utils.EMF_Creator;
+import utils.Utility;
 
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
@@ -56,15 +58,35 @@ public class MealPlanResource
     {
         LocalDate date = GSON.fromJson(input, LocalDate.class);
 //        LocalDate date = LocalDate.parse(input);
-        List<String> recipeJSONList = recipeFacade.getMealplanRecipesJSONByUserAndDate(userName, date);
-        List<SingleRecipeDTO> singleRecipeDTOList = new ArrayList<>();
-        SingleRecipeDTO singleRecipeDTO;
-        for (int i = 0; i < recipeJSONList.size(); i++) {
-            singleRecipeDTO = GSON.fromJson(recipeJSONList.get(i), SingleRecipeDTO.class);
-            singleRecipeDTOList.add(singleRecipeDTO);
-        }
-        return GSON.toJson(singleRecipeDTOList);
+        List<SingleMealPlanDTO> recipeJSONList = recipeFacade.getRecipeAndTypeByUsernameAndDate(userName, date);
+
+        String recipesWithTypes = GSON.toJson(recipeJSONList);
+        return recipesWithTypes;
     }
+
+//    @Path("/{userName}/recipes")
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public String getMealplanRecipesByUserAndDate(String input, @PathParam("userName")String userName)
+//    {
+//        LocalDate date = GSON.fromJson(input, LocalDate.class);
+////        LocalDate date = LocalDate.parse(input);
+//        List<String> recipeJSONList = recipeFacade.getMealplanRecipesJSONByUserAndDate(userName, date);
+//        List<String> fixedRecipeJSONList = new ArrayList<>();
+//        String recipeJSON = "";
+//        for (int i = 0; i < recipeJSONList.size(); i++) {
+//            recipeJSON = Utility.fixDiets(recipeJSONList.get(i));
+//            fixedRecipeJSONList.add(recipeJSON);
+//        }
+//        List<SingleRecipeDTO> singleRecipeDTOList = new ArrayList<>();
+//        SingleRecipeDTO singleRecipeDTO;
+//        for (int i = 0; i < recipeJSONList.size(); i++) {
+//            singleRecipeDTO = GSON.fromJson(fixedRecipeJSONList.get(i), SingleRecipeDTO.class);
+//            singleRecipeDTOList.add(singleRecipeDTO);
+//        }
+//        return GSON.toJson(singleRecipeDTOList);
+//    }
 
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
