@@ -76,7 +76,7 @@ public class RecipeResource
         return GSON.toJson(singleRecipeDTO);
     }
 
-    @Path("user/{userName}")
+    @Path("bookmark/{userName}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getBookmarkedRecipeFromDBByUser(@PathParam("userName")String userName) throws ExecutionException, InterruptedException, IOException
