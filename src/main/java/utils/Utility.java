@@ -53,13 +53,13 @@ public class Utility {
 
     public static String fixDiets(String badJSON)
     {
-        int indexOfStartBracket = badJSON.indexOf("diets\":[")+8;
+        int indexOfStartBracket = badJSON.indexOf("diets\":[")+7;
         char start = badJSON.charAt(indexOfStartBracket);
         int indexOfEndBracket = badJSON.indexOf("], \"analyzedInstructions");
         char end = badJSON.charAt(indexOfEndBracket);
         if (indexOfStartBracket+1 != indexOfEndBracket)
         {
-            String diets = badJSON.substring(indexOfStartBracket, indexOfEndBracket);
+            String diets = badJSON.substring(indexOfStartBracket+1, indexOfEndBracket);
             String arrayOfDiets[] = diets.split(", ");
             String workingDiets = "";
             for (int i = 0; i < arrayOfDiets.length; i++) {

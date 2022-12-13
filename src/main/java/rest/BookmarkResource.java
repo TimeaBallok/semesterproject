@@ -31,7 +31,7 @@ public class BookmarkResource
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public String addMealPlan(String input){
+    public String addBookmark(String input){
         BookmarkDTO bookmarkDTO = GSON.fromJson(input, BookmarkDTO.class);
         BookmarkDTO newBookmarkDTO = recipeFacade.addBookmark(bookmarkDTO);
         return GSON.toJson(newBookmarkDTO);

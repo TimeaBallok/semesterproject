@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -178,12 +179,56 @@ public class RecipeFacade
         EntityManager em = emf.createEntityManager();
 
         try{
-            TypedQuery<MealPlan> query = em.createQuery("SELECT p FROM MealPlan p JOIN p.userName ph WHERE ph.userName = :userName", MealPlan.class);
+            TypedQuery<MealPlan> query = em.createQuery("SELECT p FROM MealPlan p JOIN p.userName ph WHERE ph.userName = :userName order by p.date", MealPlan.class);
             query.setParameter("userName",userName);
             List<MealPlan> mealPlans = query.getResultList();
             return MealPlanDTO.getDtos(mealPlans);
         } finally {
             em.close();
+        }
+    }
+
+    public List<String> getMealplanRecipesJSONByUserAndDate(String userName, LocalDate date)
+    {
+        {
+            EntityManager em = emf.createEntityManager();
+            try{
+                //SELECT r FROM Recipe r Join r.bookmarks bm Join bm.userName us WHERE us.userName = :userName
+                TypedQuery<Recipe> query = em.createQuery("SELECT r FROM MealPlan m Join m.recipe r WHERE m.userName.userName = :userName AND m.date = :date", Recipe.class);
+                query.setParameter("userName",userName);
+                query.setParameter("date",date);
+                List<Recipe> recipes = query.getResultList();
+                List<String> recipeJSONList = new ArrayList<>();
+                recipes.forEach(recipe -> recipeJSONList.add(recipe.getRecipeJson()));
+                return recipeJSONList;
+            } finally {
+                em.close();
+            }
+        }
+    }
+
+    public List<SingleMealPlanDTO> getRecipeAndTypeByUsernameAndDate(String userName, LocalDate date)
+    {
+        {
+            EntityManager em = emf.createEntityManager();
+            try{
+                //SELECT r FROM Recipe r Join r.bookmarks bm Join bm.userName us WHERE us.userName = :userName
+                TypedQuery<Recipe> queryR = em.createQuery("SELECT r FROM MealPlan m Join m.recipe r WHERE m.userName.userName = :userName AND m.date = :date", Recipe.class);
+                TypedQuery<MealPlan> queryM = em.createQuery("SELECT m FROM MealPlan m Join m.recipe r WHERE m.userName.userName = :userName AND m.date = :date", MealPlan.class);
+                queryR.setParameter("userName",userName);
+                queryM.setParameter("userName",userName);
+                queryR.setParameter("date",date);
+                queryM.setParameter("date",date);
+                List<Recipe> recipes = queryR.getResultList();
+                List<MealPlan> mealPlans = queryM.getResultList();
+                List<SingleMealPlanDTO> dtos = SingleMealPlanDTO.getDtos(recipes, mealPlans);
+//                List<SingleMealPlanDTO> dtos = query.getResultList();
+//                List<String> recipeJSONList = new ArrayList<>();
+//                dtos.forEach(mr -> recipeJSONList.add(mr.getRecipeJson()));
+                return dtos;
+            } finally {
+                em.close();
+            }
         }
     }
 
