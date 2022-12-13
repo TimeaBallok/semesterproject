@@ -13,6 +13,9 @@ Content-Type: application/json
 GET http://localhost:8080/semesterproject/api/recipe/user/user
 Content-Type: application/json
 
+### Delete bookmark
+DELETE http://localhost:8080/semesterproject/api/recipe/bookmark/user/647661
+Content-Type: application/json
 
 ### Get SingleRecipe
 GET http://localhost:8080/semesterproject/api/recipe/singleRecipe/666959
