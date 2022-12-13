@@ -8,8 +8,10 @@ import utils.Utility;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.WebApplicationException;
+import java.awt.print.Book;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -28,15 +30,16 @@ public class RecipeFacade
     private static EntityManagerFactory emf;
     private static RecipeFacade instance;
 
-    private RecipeFacade() {
+    private RecipeFacade()
+    {
     }
 
     /**
-     *
      * @param _emf
      * @return the instance of this facade.
      */
-    public static RecipeFacade getRecipeFacade(EntityManagerFactory _emf) {
+    public static RecipeFacade getRecipeFacade(EntityManagerFactory _emf)
+    {
         if (instance == null) {
             emf = _emf;
             instance = new RecipeFacade();
@@ -62,7 +65,7 @@ public class RecipeFacade
     public String singleRecipePage(int id)
     {
         // https://api.spoonacular.com/recipes/716429/information?includeNutrition=false
-        String URL = BASE_URL +  id + "/information?includeNutrition=false" + System.getenv("APIKEY");
+        String URL = BASE_URL + id + "/information?includeNutrition=false" + System.getenv("APIKEY");
         List<String> urls = new ArrayList<>();
         urls.add(URL);
         try {
@@ -76,9 +79,9 @@ public class RecipeFacade
     }
 
     // TODO: tractor
-    public String fetchSingleRecipe (String id) throws IOException
+    public String fetchSingleRecipe(String id) throws IOException
     {
-        URL apiURL = new URL(BASE_URL+id+"/information?includeNutrition=true" + System.getenv("APIKEY"));
+        URL apiURL = new URL(BASE_URL + id + "/information?includeNutrition=true" + System.getenv("APIKEY"));
         HttpURLConnection connection = (HttpURLConnection) apiURL.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");
@@ -93,7 +96,7 @@ public class RecipeFacade
         return jsonStr;
     }
 
-    public String fetchRecipes (String url) throws IOException
+    public String fetchRecipes(String url) throws IOException
     {
         URL apiURL = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) apiURL.openConnection();
@@ -143,10 +146,10 @@ public class RecipeFacade
         return results;
     }
 
-    public MealPlanDTO addMealPlan(MealPlanDTO mealPlanDTO) throws API_Exception {
+    public MealPlanDTO addMealPlan(MealPlanDTO mealPlanDTO) throws API_Exception
+    {
         EntityManager em = emf.createEntityManager();
-        try
-        {
+        try {
             em.getTransaction().begin();
             User user = em.find(User.class, mealPlanDTO.getUserName());
             Recipe recipe = em.find(Recipe.class, mealPlanDTO.getRecipeId());
@@ -157,8 +160,8 @@ public class RecipeFacade
 //                // need commit here?
 //            }
             TypedQuery<MealPlan> queryM = em.createQuery("SELECT m FROM MealPlan m Join m.recipe r WHERE m.userName.userName = :userName AND m.date = :date", MealPlan.class);
-            queryM.setParameter("userName",user.getUserName());
-            queryM.setParameter("date",mealPlanDTO.getDate());
+            queryM.setParameter("userName", user.getUserName());
+            queryM.setParameter("date", mealPlanDTO.getDate());
             List<MealPlan> mealPlansForThatDay = queryM.getResultList();
 
             for (MealPlan mealPlan : mealPlansForThatDay) {
@@ -170,7 +173,7 @@ public class RecipeFacade
             if (mealPlanDTO.getType().equals("DINNER"))
                 type = MealPlan.MealType.DINNER;
             else if (mealPlanDTO.getType().equals("BREAKFAST"))
-              type = MealPlan.MealType.BREAKFAST;
+                type = MealPlan.MealType.BREAKFAST;
             else
                 type = MealPlan.MealType.LUNCH;
 
@@ -188,9 +191,9 @@ public class RecipeFacade
     {
         EntityManager em = emf.createEntityManager();
 
-        try{
+        try {
             TypedQuery<MealPlan> query = em.createQuery("SELECT p FROM MealPlan p JOIN p.userName ph WHERE ph.userName = :userName order by p.date", MealPlan.class);
-            query.setParameter("userName",userName);
+            query.setParameter("userName", userName);
             List<MealPlan> mealPlans = query.getResultList();
             return MealPlanDTO.getDtos(mealPlans);
         } finally {
@@ -202,11 +205,11 @@ public class RecipeFacade
     {
         {
             EntityManager em = emf.createEntityManager();
-            try{
+            try {
                 //SELECT r FROM Recipe r Join r.bookmarks bm Join bm.userName us WHERE us.userName = :userName
                 TypedQuery<Recipe> query = em.createQuery("SELECT r FROM MealPlan m Join m.recipe r WHERE m.userName.userName = :userName AND m.date = :date", Recipe.class);
-                query.setParameter("userName",userName);
-                query.setParameter("date",date);
+                query.setParameter("userName", userName);
+                query.setParameter("date", date);
                 List<Recipe> recipes = query.getResultList();
                 List<String> recipeJSONList = new ArrayList<>();
                 recipes.forEach(recipe -> recipeJSONList.add(recipe.getRecipeJson()));
@@ -221,14 +224,14 @@ public class RecipeFacade
     {
         {
             EntityManager em = emf.createEntityManager();
-            try{
+            try {
                 //SELECT r FROM Recipe r Join r.bookmarks bm Join bm.userName us WHERE us.userName = :userName
                 TypedQuery<Recipe> queryR = em.createQuery("SELECT r FROM MealPlan m Join m.recipe r WHERE m.userName.userName = :userName AND m.date = :date", Recipe.class);
                 TypedQuery<MealPlan> queryM = em.createQuery("SELECT m FROM MealPlan m Join m.recipe r WHERE m.userName.userName = :userName AND m.date = :date", MealPlan.class);
-                queryR.setParameter("userName",userName);
-                queryM.setParameter("userName",userName);
-                queryR.setParameter("date",date);
-                queryM.setParameter("date",date);
+                queryR.setParameter("userName", userName);
+                queryM.setParameter("userName", userName);
+                queryR.setParameter("date", date);
+                queryM.setParameter("date", date);
                 List<Recipe> recipes = queryR.getResultList();
                 List<MealPlan> mealPlans = queryM.getResultList();
                 List<SingleMealPlanDTO> dtos = SingleMealPlanDTO.getDtos(recipes, mealPlans);
@@ -245,8 +248,7 @@ public class RecipeFacade
     public BookmarkDTO addBookmark(BookmarkDTO bookmarkDTO)
     {
         EntityManager em = emf.createEntityManager();
-        try
-        {
+        try {
             em.getTransaction().begin();
             User user = em.find(User.class, bookmarkDTO.getUsername());
             Recipe recipe = em.find(Recipe.class, bookmarkDTO.getRecipeId());
@@ -256,7 +258,6 @@ public class RecipeFacade
 //                em.persist(recipe);
 //                // need commit here?
 //            }
-
 
 
             Bookmark bookmark = new Bookmark(user, recipe);
@@ -274,12 +275,10 @@ public class RecipeFacade
     {
         EntityManager em = emf.createEntityManager();
         Recipe recipe;
-        try
-        {
+        try {
             em.getTransaction().begin();
             recipe = em.find(Recipe.class, singleRecipeDTO.getId());
-            if (recipe == null)
-            {
+            if (recipe == null) {
                 recipe = new Recipe(singleRecipeDTO.getId(), singleRecipeDTO.toString());
                 em.persist(recipe);
                 em.getTransaction().commit();
@@ -290,7 +289,6 @@ public class RecipeFacade
         }
         return recipe;
     }
-
 
 
     public String getRecipeById(Integer id)
@@ -305,9 +303,9 @@ public class RecipeFacade
     {
         {
             EntityManager em = emf.createEntityManager();
-            try{
+            try {
                 TypedQuery<Recipe> query = em.createQuery("SELECT r FROM Recipe r Join r.bookmarks bm Join bm.userName us WHERE us.userName = :userName", Recipe.class);
-                query.setParameter("userName",userName);
+                query.setParameter("userName", userName);
                 List<Recipe> recipes = query.getResultList();
                 List<String> recipeJSONList = new ArrayList<>();
                 recipes.forEach(recipe -> recipeJSONList.add(recipe.getRecipeJson()));
@@ -318,15 +316,57 @@ public class RecipeFacade
         }
     }
 
-    public List<BookmarkDTO> getBookmarks(String userName) {
+    public int deleteBookmark(String userName, Integer recipeId)
+    {
+        EntityManager em = emf.createEntityManager();
+        try {
+            //SELECT p FROM MealPlan p JOIN p.userName ph WHERE ph.userName = :userName order by p.date
+            TypedQuery<Bookmark> query = em.createQuery("SELECT b FROM Bookmark b JOIN b.userName un where un.userName =:userName and b.recipe.id =:recipeId", Bookmark.class);
+            query.setParameter("userName", userName);
+            query.setParameter("recipeId", recipeId);
+
+            Bookmark temp = query.getSingleResult();
+            em.getTransaction().begin();
+            Bookmark bob = em.find(Bookmark.class, temp.getId());
+            em.remove(bob);
+            em.flush();
+            em.getTransaction().commit();
+            return temp.getId();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            em.close();
+        }
+    }
+
+    public void deleteHobbyById(int i)
+    {
+        EntityManager em = emf.createEntityManager();
+        try {
+
+            Bookmark hob = em.find(Bookmark.class, i);
+            em.getTransaction().begin();
+            em.remove(hob);
+            em.flush();
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+        }
+
+    }
+
+
+    public List<BookmarkDTO> getBookmarks(String userName)
+    {
         {
             EntityManager em = emf.createEntityManager();
 
 //            Query("SELECT p FROM MealPlan p JOIN p.userName ph WHERE ph.userName = :userName", MealPlan.class);
 
-            try{
+            try {
                 TypedQuery<Bookmark> query = em.createQuery("SELECT b FROM Bookmark b Join b.userName bu WHERE bu.userName = :userName", Bookmark.class);
-                query.setParameter("userName",userName);
+                query.setParameter("userName", userName);
                 List<Bookmark> bookMarks = query.getResultList();
                 return BookmarkDTO.getBookMarkDtos(bookMarks);
             } finally {
