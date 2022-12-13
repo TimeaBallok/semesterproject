@@ -9,6 +9,7 @@ import entities.MealPlan;
 import entities.Recipe;
 import entities.Role;
 import entities.User;
+import errorhandling.API_Exception;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 
@@ -130,8 +131,7 @@ public class RecipeFacadeTest
 
     @Test
     @Disabled
-    void getAndAddMealPlansToAUser()
-    {
+    void getAndAddMealPlansToAUser() throws API_Exception {
         // We could/should have split this test into 2 parts? An add and a get part.
         // checking to see the list is empty
         List<MealPlanDTO> actual = facade.getAllMealPlans(user1.getUserName());

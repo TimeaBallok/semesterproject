@@ -2,12 +2,14 @@ package facades;
 
 import dtos.*;
 import entities.*;
+import errorhandling.API_Exception;
 import utils.CallableHttpUtils;
 import utils.Utility;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.WebApplicationException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -141,8 +143,7 @@ public class RecipeFacade
         return results;
     }
 
-    public MealPlanDTO addMealPlan(MealPlanDTO mealPlanDTO)
-    {
+    public MealPlanDTO addMealPlan(MealPlanDTO mealPlanDTO) throws API_Exception {
         EntityManager em = emf.createEntityManager();
         try
         {
@@ -155,6 +156,15 @@ public class RecipeFacade
 //                em.persist(recipe);
 //                // need commit here?
 //            }
+            TypedQuery<MealPlan> queryM = em.createQuery("SELECT m FROM MealPlan m Join m.recipe r WHERE m.userName.userName = :userName AND m.date = :date", MealPlan.class);
+            queryM.setParameter("userName",user.getUserName());
+            queryM.setParameter("date",mealPlanDTO.getDate());
+            List<MealPlan> mealPlansForThatDay = queryM.getResultList();
+
+            for (MealPlan mealPlan : mealPlansForThatDay) {
+                if (mealPlan.getType().getMeal().equals(mealPlanDTO.getType()))
+                    throw new API_Exception("A mealplay with mealtype: " + mealPlanDTO.getType() + ", Already exist for date: " + mealPlanDTO.getDate());
+            }
 
             MealPlan.MealType type;
             if (mealPlanDTO.getType().equals("DINNER"))

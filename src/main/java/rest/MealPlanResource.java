@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import dtos.MealPlanDTO;
 import dtos.SingleMealPlanDTO;
 import dtos.SingleRecipeDTO;
+import errorhandling.API_Exception;
 import facades.RecipeFacade;
 import utils.EMF_Creator;
 import utils.Utility;
@@ -91,7 +92,7 @@ public class MealPlanResource
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public String addMealPlan(String input){
+    public String addMealPlan(String input) throws API_Exception {
         MealPlanDTO mealPlanDTO = GSON.fromJson(input, MealPlanDTO.class);
         MealPlanDTO newMealPlanDTO = recipeFacade.addMealPlan(mealPlanDTO);
         return GSON.toJson(newMealPlanDTO);
