@@ -245,8 +245,7 @@ public class RecipeFacade
         }
     }
 
-    public BookmarkDTO addBookmark(BookmarkDTO bookmarkDTO)
-    {
+    public BookmarkDTO addBookmark(BookmarkDTO bookmarkDTO) throws API_Exception {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
@@ -258,6 +257,15 @@ public class RecipeFacade
 //                em.persist(recipe);
 //                // need commit here?
 //            }
+            TypedQuery<Bookmark> queryB = em.createQuery("SELECT b FROM Bookmark b WHERE b.userName.userName = :userName AND b.recipe.id = :id", Bookmark.class);
+            queryB.setParameter("userName", bookmarkDTO.getUsername());
+            queryB.setParameter("id", bookmarkDTO.getRecipeId());
+            List<Bookmark> bookmarkList = queryB.getResultList();
+
+            for (Bookmark bookmark : bookmarkList) {
+                if (bookmark.getUserName().getUserName().equals(bookmarkDTO.getUsername()) && (bookmark.getRecipe().getId().equals(bookmarkDTO.getRecipeId())))
+                    throw new API_Exception("User:" + bookmarkDTO.getUsername() +" already bookmarked recipe with id: " +bookmarkDTO.getRecipeId());
+            }
 
 
             Bookmark bookmark = new Bookmark(user, recipe);

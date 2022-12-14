@@ -199,8 +199,7 @@ public class RecipeFacadeTest
 
     @Test
     @Disabled
-    void AddBookmarkToAUser()
-    {
+    void AddBookmarkToAUser() throws API_Exception {
         // checking to see the list is empty
         List<BookmarkDTO> actual = facade.getBookmarks(user1.getUserName());
         assertEquals(0,actual.size());

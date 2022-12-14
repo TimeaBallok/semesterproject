@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import dtos.BookmarkDTO;
 import dtos.MealPlanDTO;
 import dtos.RecipesDTO;
+import errorhandling.API_Exception;
 import facades.RecipeFacade;
 import utils.EMF_Creator;
 
@@ -31,7 +32,7 @@ public class BookmarkResource
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public String addBookmark(String input){
+    public String addBookmark(String input) throws API_Exception {
         BookmarkDTO bookmarkDTO = GSON.fromJson(input, BookmarkDTO.class);
         BookmarkDTO newBookmarkDTO = recipeFacade.addBookmark(bookmarkDTO);
         return GSON.toJson(newBookmarkDTO);
