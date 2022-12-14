@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dtos.*;
 import entities.Recipe;
+import errorhandling.API_Exception;
 import facades.RecipeFacade;
 import utils.EMF_Creator;
 import utils.Utility;
@@ -36,10 +37,11 @@ public class RecipeResource
     @GET
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed("user") TODO:HEY INDKOMMENTER MIG DIN ABE
-    public String searchRecipeByName(@PathParam("recipeName") String recipeName) throws ExecutionException, InterruptedException
-    {
+    public String searchRecipeByName(@PathParam("recipeName") String recipeName) throws ExecutionException, InterruptedException, API_Exception {
         List<String> recipes = recipeFacade.complexSearch(recipeName);
         RecipesDTO recipesDTO = GSON.fromJson(recipes.get(0), RecipesDTO.class);
+        if (recipesDTO.getResults().size() == 0)
+            throw new API_Exception("No recipes available");
         return GSON.toJson(recipesDTO);
     }
 
